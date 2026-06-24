@@ -1,29 +1,37 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import API from "../../Api/axiosConfig";
 import { toast } from "react-toastify";
 import MyInput from "../../Components/Myinput";
 import Mytitle from "../../Components/Mytitle";
-import MyButton from "../../Components/MyButton";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPrint } from "@fortawesome/free-solid-svg-icons";
-import { useReactToPrint } from "react-to-print";
 import { useSettings } from "../../context/SettingsContext";
 import { useTranslation } from "react-i18next";
+import { FloatingLabel, Form } from "react-bootstrap";
 
 function IncomeStatement() {
   const { t } = useTranslation();
-
-  const [from, setFrom] = useState("");
-  const [to, setTo] = useState("");
-  const [report, setReport] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const printRef = useRef();
   const { settings } = useSettings();
 
-  const fetchReport = async () => {
+  const [report, setReport] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [branches, setBranches] = useState([]);
+  const [filters, setFilters] = useState({
+    from: "",
+    to: "",
+    branch_uuid: "",
+  });
+
+  useEffect(() => {
+    API.get("/branches")
+      .then((res) => setBranches(res.data.data || []))
+      .catch((err) => console.error("Failed to load branches", err));
+  }, []);
+
+  const fetchReport = async (body = filters) => {
     setLoading(true);
     try {
-      const { data } = await API.post("/income-statement", { from, to });
+      const { data } = await API.post("/income-statement", body);
       setReport(data.data);
     } catch (error) {
       toast.error(t("income_load_error"));
@@ -48,8 +56,14 @@ function IncomeStatement() {
       return `${year}-${month}-${day}`;
     };
 
-    setFrom(formatDate(firstDay));
-    setTo(formatDate(lastDay));
+    const initialFilters = {
+      from: formatDate(firstDay),
+      to: formatDate(lastDay),
+      branch_uuid: "",
+    };
+
+    setFilters(initialFilters);
+    fetchReport(initialFilters);
   }, []);
 
   return (
@@ -62,8 +76,12 @@ function IncomeStatement() {
             <MyInput
               label={t("income_from")}
               type="date"
-              value={from}
-              onChange={(e) => setFrom(e.target.value)}
+              value={filters.from}
+              onChange={(e) => {
+                const nextFilters = { ...filters, from: e.target.value };
+                setFilters(nextFilters);
+                fetchReport(nextFilters);
+              }}
               dontShowDay={true}
             />
           </div>
@@ -71,17 +89,38 @@ function IncomeStatement() {
             <MyInput
               label={t("income_to")}
               type="date"
-              value={to}
-              onChange={(e) => setTo(e.target.value)}
+              value={filters.to}
+              onChange={(e) => {
+                const nextFilters = { ...filters, to: e.target.value };
+                setFilters(nextFilters);
+                fetchReport(nextFilters);
+              }}
               dontShowDay={true}
             />
           </div>
-          <div className="col-md-2 d-flex align-items-end">
-            <MyButton
-              text={loading ? t("income_loading") : t("income_show_report")}
-              loading={loading}
-              onClick={fetchReport}
-            />
+          <div className="col-md-3">
+            <FloatingLabel label={t("branch")}>
+              <Form.Select
+                className="form-select mb-3"
+                style={{ height: "38px" }}
+                value={filters.branch_uuid}
+                onChange={(e) => {
+                  const nextFilters = {
+                    ...filters,
+                    branch_uuid: e.target.value,
+                  };
+                  setFilters(nextFilters);
+                  fetchReport(nextFilters);
+                }}
+              >
+                <option value="">{t("select_branch")}</option>
+                {branches.map((opt, j) => (
+                  <option key={j} value={opt.uuid}>
+                    {opt.name}
+                  </option>
+                ))}
+              </Form.Select>
+            </FloatingLabel>
           </div>
         </div>
 
@@ -94,7 +133,7 @@ function IncomeStatement() {
         <div className="print-header">
           <div className="d-flex justify-content-between align-items-center mb-3">
             <h2>{t("income_title")}</h2>
-            {settings?.head_company_logo == 1 && (
+            {settings?.head_company_logo === 1 && (
               <img
                 src={settings?.company_logo}
                 alt={t("income_company_logo")}
@@ -104,13 +143,13 @@ function IncomeStatement() {
           </div>
 
           <div className="print-header-section">
-            {settings?.head_company_name == 1 && (
+            {settings?.head_company_name === 1 && (
               <div>
                 <strong>{t("income_company_name")}</strong>:{" "}
                 {settings?.company_name || "--"}
               </div>
             )}
-            {settings?.head_invoice_address == 1 && (
+            {settings?.head_invoice_address === 1 && (
               <div>
                 <strong>{t("income_company_address")}</strong>:{" "}
                 {settings?.company_address || "--"}
@@ -169,13 +208,13 @@ function IncomeStatement() {
 
       <div className="print-footers only-print py-4">
         <div className="print-footer-section right">
-          {settings?.foot_tax_number == 1 && (
+          {settings?.foot_tax_number === 1 && (
             <div>
               <strong>{t("income_tax_number")}</strong>:{" "}
               {settings?.company_tax_number || "--"}
             </div>
           )}
-          {settings?.foot_company_commercial == 1 && (
+          {settings?.foot_company_commercial === 1 && (
             <div>
               <strong>{t("income_commercial_register")}</strong>:{" "}
               {settings?.company_commercial || "--"}
@@ -184,7 +223,7 @@ function IncomeStatement() {
         </div>
 
         <div className="print-footer-section center">
-          {settings?.foot_company_seal == 1 && (
+          {settings?.foot_company_seal === 1 && (
             <img
               src={settings?.company_seal}
               alt={t("income_company_seal")}
@@ -194,13 +233,13 @@ function IncomeStatement() {
         </div>
 
         <div className="print-footer-section left">
-          {settings?.foot_company_website == 1 && (
+          {settings?.foot_company_website === 1 && (
             <div>
               <strong>{t("income_website")}</strong>:{" "}
               {settings?.company_website || "https://www.facebook.com/"}
             </div>
           )}
-          {settings?.foot_company_email == 1 && (
+          {settings?.foot_company_email === 1 && (
             <div>
               <strong>{t("income_email")}</strong>:{" "}
               {settings?.company_email || "example@info.com"}

@@ -13,6 +13,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Modal, Button } from "react-bootstrap";
 
 import ModalForm from "../../Components/ModalForm";
+import { formatNumbersToDecimals } from "../../utils/formatNumbersToDecimals";
 import Can from "../../Components/Can";
 import { useAuth } from "../../context/AuthContext";
 import { useTheme } from "../../context/ThemeContext";
@@ -27,8 +28,8 @@ function Salary() {
   const [data, setData] = useState(null);
 
   const [filters, setFilters] = useState({
-    year: "",
-    month: "",
+    year: new Date().getFullYear(),
+    month: new Date().getMonth() + 1,
     date: "",
     branch_uuid: "",
   });
@@ -201,11 +202,11 @@ function Salary() {
   const { theme } = useTheme();
   const columns = [
     { header: t("salary_name"), accessor: "name" },
-    { header: t("salary_basic_salary"), accessor: "basic_salary" },
-    { header: t("salary_total_rewards"), accessor: "total_rewards" },
-    { header: t("salary_total_discounts"), accessor: "total_discounts" },
-    { header: t("salary_total_withdrawals"), accessor: "total_withdrawals" },
-    { header: t("salary_net_salary"), accessor: "net_salary" },
+    { header: t("salary_basic_salary"), accessor: (row) => formatNumbersToDecimals(row.basic_salary) },
+    { header: t("salary_total_rewards"), accessor: (row) => formatNumbersToDecimals(row.total_rewards) },
+    { header: t("salary_total_discounts"), accessor: (row) => formatNumbersToDecimals(row.total_discounts) },
+    { header: t("salary_total_withdrawals"), accessor: (row) => formatNumbersToDecimals(row.total_withdrawals) },
+    { header: t("salary_net_salary"), accessor: (row) => formatNumbersToDecimals(row.net_salary) },
     {
       header: t("salary_status"),
       accessor: (row) => (

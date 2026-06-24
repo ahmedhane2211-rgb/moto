@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPrint } from "@fortawesome/free-solid-svg-icons";
@@ -12,6 +12,7 @@ function EmployeeDetails() {
   const [loading, setLoading] = useState(true);
   const [isPrinting, setIsPrinting] = useState(false);
   const { settings } = useSettings();
+  const navigate = useNavigate();
   const { uuid } = useParams();
   const { t, i18n } = useTranslation();
   const { theme } = useTheme();
@@ -57,23 +58,34 @@ function EmployeeDetails() {
     }, 100);
   };
 
-  const currentTextColor = theme === 'light' ? "black" : "white";
+  const currentTextColor = theme === "light" ? "black" : "white";
 
   return (
     <>
-      <div className="text-center my-3 no-print">
-        <button className="btn btn-outline-info" onClick={handlePrint}>
-          <FontAwesomeIcon icon={faPrint} /> {t('prints')}
-        </button>
-      </div>
-
       {/* إضافة كلاس 'printable-content' للعنصر الذي نريد طباعته */}
-      <div className={`container employee-print-container theme-${theme} printable-content`}>
+      <div
+        style={{ maxWidth: "900px" }}
+        className="text-center my-3 m-auto no-print"
+      >
+        <div className="d-flex gap-2">
+          <button
+            className="btn btn-outline-secondary"
+            onClick={() => navigate(-1)}
+          >
+            &#8592; {t("back") || "العودة"}
+          </button>
+          <button className="btn btn-outline-info" onClick={handlePrint}>
+            <FontAwesomeIcon icon={faPrint} /> {t("prints")}
+          </button>
+        </div>
+      </div>
+      <div
+        className={`container employee-print-container theme-${theme} printable-content`}
+      >
         <header
           style={{ direction: i18n.language === "ar" ? "rtl" : "ltr" }}
           className="print-header d-print-block"
         >
-          
           <div
             className="w-100"
             style={{
@@ -122,16 +134,17 @@ function EmployeeDetails() {
             </div>
           </div>
           <h2>
-            <strong>{t("salary_details")}:</strong> ({employee.name || "الموظف"})
+            <strong>{t("salary_details")}:</strong> ({employee.name || "الموظف"}
+            )
           </h2>
         </header>
 
         <main className="print-content">
-          <h4 style={{color: currentTextColor}} className="text-center mb-4">
+          <h4 style={{ color: currentTextColor }} className="text-center mb-4">
             {t("employee_salary_report")}: {employee.name}
           </h4>
 
-          <div style={{color: currentTextColor}} className="employee-info">
+          <div style={{ color: currentTextColor }} className="employee-info">
             <div>
               <strong>{t("basic_salary")}:</strong> {employee.basic_salary}
             </div>
@@ -182,7 +195,10 @@ function EmployeeDetails() {
             </div>
           )}
 
-          <h5 style={{color: currentTextColor}} className="text-center mt-4 mb-3">
+          <h5
+            style={{ color: currentTextColor }}
+            className="text-center mt-4 mb-3"
+          >
             {t("rewards_and_discounts_details")}
           </h5>
           <table
@@ -245,7 +261,7 @@ function EmployeeDetails() {
           </table>
         </main>
 
-        <footer style={{flexDirection:"column"}} className="print-footer">
+        <footer style={{ flexDirection: "column" }} className="print-footer">
           <div className="d-flex justify-content-between align-items-center mb-3">
             <div className="text-center">
               <strong>{t("employee_signature")}:</strong>
@@ -258,10 +274,16 @@ function EmployeeDetails() {
                 }}
               ></div>
             </div>
-
-            
           </div>
-          <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",justifyContent:"space-between",gap:"10px"}} className="print-footer-details">
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "1fr 1fr 1fr",
+              justifyContent: "space-between",
+              gap: "10px",
+            }}
+            className="print-footer-details"
+          >
             <div className="print-footer-section right">
               {settings?.foot_tax_number == 1 && (
                 <div>
@@ -275,7 +297,7 @@ function EmployeeDetails() {
                 </div>
               )}
             </div>
-            <div  className="print-footer-section center">
+            <div className="print-footer-section center">
               {settings?.foot_company_website == 1 && (
                 <div className="footer-line">
                   <span className="footer-label">{t("website")}: </span>

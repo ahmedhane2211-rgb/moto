@@ -1185,5 +1185,9 @@
   "total_creditors": "Total Creditors",
   "debtors": "Debtors",
   "cash_distribution": "Cash Distribution",
-  "debtor": "Debtor"
+  "debtor": "Debtor",
+  "withdraw_cannot_exceed_salary": "The employee advance cannot exceed the employee's salary",
+  "back": "Back",
+  "discountReward_cashBalance": "Cash Balance",
+  "discountReward_bankBalance": "Bank Balance"
 }

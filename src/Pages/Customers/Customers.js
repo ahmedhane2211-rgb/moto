@@ -8,8 +8,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
 import Can from "../../Components/Can";
 import { useTranslation } from "react-i18next";
-import { toast } from "react-toastify";
 import { SquarePen } from "lucide-react";
+import { NegativeNumberDisplay } from "../../utils/formatNegativeNumber";
 
 function Customers() {
   const { t } = useTranslation();
@@ -67,12 +67,14 @@ function Customers() {
     setEditId(record.uuid);
     setErrors({});
     setShowModal(true);
-    
+
     if (record.attachments && record.attachments.length > 0) {
       const storageBaseUrl = BASE_URL.replace("/api/", "/storage/");
-      setImagePreviews(record.attachments.map((att) => 
-        att.attachment ? `${storageBaseUrl}${att.attachment}` : att
-      ));
+      setImagePreviews(
+        record.attachments.map((att) =>
+          att.attachment ? `${storageBaseUrl}${att.attachment}` : att,
+        ),
+      );
     } else {
       setImagePreviews([]);
     }
@@ -112,7 +114,7 @@ function Customers() {
 
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
-      
+
       return;
     }
 
@@ -126,8 +128,12 @@ function Customers() {
           formData.attachments.forEach((file) => {
             data.append("attachments[]", file);
           });
-        } else if (key === "balances" || key === "last_balance" || (editId && key === "opening_balance")) {
-            // Skip large objects or fields that shouldn't be updated during edit
+        } else if (
+          key === "balances" ||
+          key === "last_balance" ||
+          (editId && key === "opening_balance")
+        ) {
+          // Skip large objects or fields that shouldn't be updated during edit
         } else if (formData[key] !== null && formData[key] !== undefined) {
           data.append(key, formData[key]);
         }
@@ -137,11 +143,11 @@ function Customers() {
         // Many APIs don't support FormData with PUT, so we might need to use POST with _method=PUT
         data.append("_method", "PUT");
         await API.post(`/customers/${editId}`, data, {
-            headers: { "Content-Type": "multipart/form-data" },
+          headers: { "Content-Type": "multipart/form-data" },
         });
       } else {
         await API.post("/customers", data, {
-            headers: { "Content-Type": "multipart/form-data" },
+          headers: { "Content-Type": "multipart/form-data" },
         });
       }
       setShowModal(false);
@@ -169,25 +175,32 @@ function Customers() {
     { header: t("bank_name"), accessor: "bank_name" },
     {
       header: t("customers_currentBalance"),
-      accessor: "last_balance.total_value",
+      accessor: (row) => (
+        <NegativeNumberDisplay value={row.last_balance?.total_value} />
+      ),
     },
     {
       header: t("customers_actions"),
       accessor: (row) => {
         return (
           <>
-            <div style={{ width: "fit-content" }} className="d-flex border mx-auto rounded">
+            <div
+              style={{ width: "fit-content" }}
+              className="d-flex border mx-auto rounded"
+            >
               <Can permission="customer_show">
                 <button
                   className="btn btn-sm btn-primary mx-1 no-style"
-                  onClick={() => handleShowDetails(row)}>
+                  onClick={() => handleShowDetails(row)}
+                >
                   <FontAwesomeIcon icon={faEye} />
                 </button>
               </Can>
               <Can permission="customer_update">
                 <button
                   className="btn btn-sm btn-primary mx-1 no-style"
-                  onClick={() => handleEdit(row)}>
+                  onClick={() => handleEdit(row)}
+                >
                   <SquarePen />
                 </button>
               </Can>
@@ -206,13 +219,14 @@ function Customers() {
       <ModalForm
         show={showModal}
         onClose={() => setShowModal(false)}
-        title={`${editId ? t("customers_editCustomer") : t("customers_addCustomer")} ${formData?.name || ''}`}
+        title={`${editId ? t("customers_editCustomer") : t("customers_addCustomer")} ${formData?.name || ""}`}
         onSubmit={handleSubmit}
         loading={loading}
-        mode="form">
+        mode="form"
+      >
         <div className="row">
           <div className="col-md-6">
-            < MyInput
+            <MyInput
               label={t("customers_name")}
               value={formData.name}
               onChange={(e) =>
@@ -286,22 +300,20 @@ function Customers() {
         </div>
 
         <div className="row">
-          
-            <div className="col-md-6">
-              <MyInput
-                label={t("customers_openingBalance")}
-                type="number"
-                value={formData.opening_balance}
-                onChange={(e) =>
-                  setFormData({
-                    ...formData,
-                    opening_balance: e.target.value,
-                  })
-                }
-                error={errors.opening_balance?.[0]}
-              />
-            </div>
-          
+          <div className="col-md-6">
+            <MyInput
+              label={t("customers_openingBalance")}
+              type="number"
+              value={formData.opening_balance}
+              onChange={(e) =>
+                setFormData({
+                  ...formData,
+                  opening_balance: e.target.value,
+                })
+              }
+              error={errors.opening_balance?.[0]}
+            />
+          </div>
         </div>
 
         <div className="row mt-4">
@@ -320,11 +332,14 @@ function Customers() {
                 />
               </label>
             </div>
-            
+
             <div className="row">
               {imagePreviews.map((preview, index) => (
                 <div key={index} className="col-md-4 mb-3">
-                  <div className="position-relative border rounded p-2 text-center" style={{ height: "150px" }}>
+                  <div
+                    className="position-relative border rounded p-2 text-center"
+                    style={{ height: "150px" }}
+                  >
                     <img
                       src={preview}
                       alt={`preview-${index}`}
@@ -335,7 +350,8 @@ function Customers() {
                       type="button"
                       className="btn btn-sm btn-danger position-absolute top-0 end-0 m-1"
                       onClick={() => removeAttachment(index)}
-                      style={{ borderRadius: "50%", padding: "2px 6px" }}>
+                      style={{ borderRadius: "50%", padding: "2px 6px" }}
+                    >
                       <FontAwesomeIcon icon={faTrash} />
                     </button>
                   </div>
@@ -350,7 +366,8 @@ function Customers() {
         show={showDetailsModal}
         onClose={() => setShowDetailsModal(false)}
         title={selectedCustomer?.name || ""}
-        mode="view">
+        mode="view"
+      >
         {selectedCustomer?.balances?.length ? (
           <table className="table table-bordered">
             <thead>
@@ -370,8 +387,12 @@ function Customers() {
                       ? t("customers_details_opening")
                       : t("customers_details_invoice")}
                   </td>
-                  <td>{b.value}</td>
-                  <td>{b.total_value}</td>
+                  <td>
+                    <NegativeNumberDisplay value={b.value} />
+                  </td>
+                  <td>
+                    <NegativeNumberDisplay value={b.total_value} />
+                  </td>
                 </tr>
               ))}
             </tbody>
@@ -386,10 +407,15 @@ function Customers() {
             <div className="row">
               {selectedCustomer.attachments.map((att, index) => {
                 const storageBaseUrl = BASE_URL.replace("/api/", "/storage/");
-                const imageUrl = att.attachment ? `${storageBaseUrl}${att.attachment}` : (att.url || att);
+                const imageUrl = att.attachment
+                  ? `${storageBaseUrl}${att.attachment}`
+                  : att.url || att;
                 return (
                   <div key={index} className="col-md-4 mb-3">
-                    <div className="border rounded p-2 text-center" style={{ height: "150px", background: "#f8f9fa" }}>
+                    <div
+                      className="border rounded p-2 text-center"
+                      style={{ height: "150px", background: "#f8f9fa" }}
+                    >
                       <a href={imageUrl} target="_blank" rel="noreferrer">
                         <img
                           src={imageUrl}
@@ -437,7 +463,8 @@ function Customers() {
             maxWidth: "90vw",
             backgroundColor: "#b19bd5",
             color: "#fff",
-          }}>
+          }}
+        >
           ! <strong>{t("customers_alert_title")}</strong>{" "}
           {t("customers_alert_message")}
         </div>

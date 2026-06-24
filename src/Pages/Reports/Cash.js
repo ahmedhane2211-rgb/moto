@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 import API from "../../Api/axiosConfig";
 import { useTranslation } from "react-i18next";
 import { FloatingLabel, Form } from "react-bootstrap";
+import { NegativeNumberDisplay } from "../../utils/formatNegativeNumber";
 
 function Cash() {
   const { t } = useTranslation();
@@ -29,6 +30,7 @@ function Cash() {
 
   const columns = [
     { header: t("cash_date"), accessor: "date" },
+    { header: t("type"), accessor: "type" },
     // {
     //   header: "النوع",
     //   accessor: (row) =>
@@ -52,8 +54,14 @@ function Cash() {
       header: t("cash_invoice_number"),
       accessor: (row) => row.money_invoice?.invoice_number || "-",
     },
-    { header: t("cash_operation_value"), accessor: "value" },
-    { header: t("cash_balance_after"), accessor: "total_value" },
+    {
+      header: t("cash_operation_value"),
+      accessor: (row) => <NegativeNumberDisplay value={row.value} />,
+    },
+    {
+      header: t("cash_balance_after"),
+      accessor: (row) => <NegativeNumberDisplay value={row.total_value} />,
+    },
   ];
 
   const handleSearch = () => {

@@ -6,11 +6,11 @@ import ModalForm from "../../Components/ModalForm";
 import MyInput from "../../Components/Myinput";
 import API from "../../Api/axiosConfig";
 import { toast } from "react-toastify";
-import MyButton from "../../Components/MyButton";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faTrash } from "@fortawesome/free-solid-svg-icons";
 import Can from "../../Components/Can";
 import MyTable from "../../Components/MyTable";
+import { NegativeNumberDisplay } from "../../utils/formatNegativeNumber";
 import { SquarePen } from "lucide-react";
 
 function DiscountReward() {
@@ -40,6 +40,8 @@ function DiscountReward() {
 
   const [showDetailsModal, setShowDetailsModal] = useState(false);
   const [selectedEmployee, setSelectedEmployee] = useState(null);
+  const [cashBalance, setCashBalance] = useState(null);
+  const [loadingBalance, setLoadingBalance] = useState(false);
 
   useEffect(() => {
     API.get("/employees")
@@ -60,6 +62,46 @@ function DiscountReward() {
     setShowDetailsModal(true);
   };
 
+  const fetchCashBalance = async (branchId) => {
+    if (!branchId) {
+      setCashBalance(null);
+      return;
+    }
+
+    // Get the branch UUID and convert to ID if needed
+    const selectedBranch = branches.find((b) => b.uuid === branchId);
+    if (!selectedBranch) {
+      setCashBalance(null);
+      return;
+    }
+
+    setLoadingBalance(true);
+    try {
+      const res = await API.get(
+        `/branches-cash-balance?branch_id=${selectedBranch.id}`,
+      );
+      // Find the branch in the response
+      const branchData = res.data.data?.branches?.find(
+        (b) => b.branch_id === selectedBranch.id,
+      );
+      if (branchData) {
+        setCashBalance(branchData.total_balance || 0);
+      } else {
+        setCashBalance(null);
+      }
+    } catch (err) {
+      console.error("Failed to load cash balance", err);
+      setCashBalance(null);
+    } finally {
+      setLoadingBalance(false);
+    }
+  };
+
+  const handleBranchChange = (branchUuid) => {
+    setFormData({ ...formData, branch_uuid: branchUuid });
+    fetchCashBalance(branchUuid);
+  };
+
   const handleAdd = () => {
     setFormData({
       employee_id: "",
@@ -71,6 +113,7 @@ function DiscountReward() {
     });
     setEditId(null);
     setErrors({});
+    setCashBalance(null);
     setShowModal(true);
   };
 
@@ -111,11 +154,15 @@ function DiscountReward() {
     if (!formData.type) newErrors.type = [t("field_required")];
     if (!formData.branch_uuid) newErrors.branch_uuid = [t("field_required")];
     if (!formData.date) newErrors.date = [t("field_required")];
-    if (!formData.value) newErrors.value = [t("field_required")];
+    if (!formData.value || parseFloat(formData.value) <= 0) {
+      newErrors.value = [
+        t("discountReward_valueMustBeGreaterThanZero") || t("field_required"),
+      ];
+    }
 
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
-      
+
       return;
     }
 
@@ -164,7 +211,10 @@ function DiscountReward() {
           : t("discountReward_reward"),
     },
     { header: t("discountReward_date"), accessor: "date" },
-    { header: t("discountReward_value"), accessor: "value" },
+    {
+      header: t("discountReward_value"),
+      accessor: (row) => <NegativeNumberDisplay value={row.value} />,
+    },
     {
       header: t("discountReward_actions"),
       accessor: (row) => (
@@ -255,9 +305,7 @@ function DiscountReward() {
           as="select"
           label={t("discountReward_safe")}
           value={formData?.branch_uuid}
-          onChange={(e) =>
-            setFormData({ ...formData, branch_uuid: e.target.value })
-          }
+          onChange={(e) => handleBranchChange(e.target.value)}
           error={errors?.branch_uuid?.[0]}
           required={true}
           options={[
@@ -265,6 +313,27 @@ function DiscountReward() {
             ...branches?.map((b) => ({ value: b?.uuid, label: b?.name })),
           ]}
         />
+
+        {formData?.branch_uuid && (
+          <div
+            className="alert alert-info mt-3"
+            style={{
+              backgroundColor: "rgba(13, 110, 253, 0.1)",
+              borderColor: "rgba(13, 110, 253, 0.3)",
+            }}
+          >
+            <strong>
+              {t("discountReward_cashBalance") || "رصيد الخزينة"}:
+            </strong>{" "}
+            {loadingBalance ? (
+              <span>{t("loading") || "جاري التحميل..."}</span>
+            ) : (
+              <span className="text-success fw-bold">
+                {cashBalance !== null ? cashBalance : "0"}
+              </span>
+            )}
+          </div>
+        )}
 
         <MyInput
           label={t("discountReward_date")}
@@ -278,6 +347,7 @@ function DiscountReward() {
         <MyInput
           label={t("discountReward_value")}
           type="number"
+          min={1}
           value={formData?.value}
           onChange={(e) => setFormData({ ...formData, value: e.target.value })}
           error={errors?.value?.[0]}
@@ -329,7 +399,7 @@ function DiscountReward() {
               </div>
               <div className="col-6 mb-3">
                 <strong>{t("discountReward_value")}:</strong>{" "}
-                {selectedEmployee?.value}
+                <NegativeNumberDisplay value={selectedEmployee?.value} />
               </div>
               <div className="col-6 mb-3">
                 <strong>{t("discountReward_note")}:</strong>{" "}

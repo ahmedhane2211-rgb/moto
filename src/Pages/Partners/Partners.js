@@ -10,6 +10,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {  faTrash, faEye } from "@fortawesome/free-solid-svg-icons";
 import Can from "../../Components/Can";
 import { SquarePen } from "lucide-react";
+import { formatNumbersToDecimals } from "../../utils/formatNumbersToDecimals";
 
 function Partners() {
     const { t } = useTranslation();
@@ -142,7 +143,7 @@ function Partners() {
     const columns = [
         { header: t("partners_name"), accessor: "name" },
         { header: t("partners_ratio"), accessor: "share_percentage" },
-        { header: t("partners_amount"), accessor: "amount" },
+        { header: t("partners_amount"), accessor: (row) => formatNumbersToDecimals(row.amount) },
         { header: t("partners_nationalId"), accessor: "national_id" },
         { header: t("partners_phone"), accessor: "phone" },
         { header: t("partners_address"), accessor: "address" },
@@ -215,6 +216,7 @@ function Partners() {
                 <MyInput
                     label={t("partners_nationalId")}
                     value={formData.national_id}
+                    type="number"
                     onChange={(e) =>
                         setFormData({ ...formData, national_id: e.target.value })
                     }
@@ -224,6 +226,7 @@ function Partners() {
                 <MyInput
                     label={t("partners_phone")}
                     value={formData.phone}
+                    type="number"
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                     error={errors.phone?.[0]}
                     required={true}

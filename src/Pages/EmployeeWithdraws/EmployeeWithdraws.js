@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash, faEye } from "@fortawesome/free-solid-svg-icons";
 import Can from "../../Components/Can";
 import { useTranslation } from "react-i18next";
+import { NegativeNumberDisplay } from "../../utils/formatNegativeNumber";
 import { SquarePen } from "lucide-react";
 
 function EmployeeWithdraws() {
@@ -120,10 +121,20 @@ function EmployeeWithdraws() {
 
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
-      
+
       return;
     }
+    const selectedEmployee = employees.find(
+      (emp) => String(emp.id) === String(formData.employee_id),
+    );
 
+    const employeeSalary = Number(selectedEmployee?.salary || 0);
+    const withdrawValue = Number(formData.value || 0);
+
+    if (withdrawValue > employeeSalary) {
+      toast.error(t("withdraw_cannot_exceed_salary"));
+      return;
+    }
     setLoading(true);
     setErrors({});
 
@@ -167,7 +178,10 @@ function EmployeeWithdraws() {
   const columns = [
     { header: t("employee_name"), accessor: "employee.name" },
     { header: t("national_id"), accessor: "employee.national_id" },
-    { header: t("value"), accessor: "value" },
+    {
+      header: t("value"),
+      accessor: (row) => <NegativeNumberDisplay value={row.value} />,
+    },
     { header: t("description"), accessor: "description" },
     { header: t("date"), accessor: "date" },
     {
@@ -328,7 +342,8 @@ function EmployeeWithdraws() {
                 {selectedCustomer.employee?.national_id}
               </div>
               <div className="col-6 mt-2">
-                <strong>{t("value")}:</strong> {selectedCustomer.value}
+                <strong>{t("value")}:</strong>{" "}
+                <NegativeNumberDisplay value={selectedCustomer.value} />
               </div>
               <div className="col-6 mt-2">
                 <strong>{t("description")}:</strong>{" "}

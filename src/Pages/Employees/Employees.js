@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import MyTable from "../../Components/MyTable";
 import Mytitle from "../../Components/Mytitle";
@@ -6,13 +6,11 @@ import ModalForm from "../../Components/ModalForm";
 import MyInput from "../../Components/Myinput";
 import API from "../../Api/axiosConfig";
 import { toast } from "react-toastify";
-import MyButton from "../../Components/MyButton";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {  faTrash, faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import Can from "../../Components/Can";
-import { useEffect } from "react";
-import { Form } from "react-bootstrap";
 import PremiumUploader from "../../Components/PremiumUploader";
+import { NegativeNumberDisplay } from "../../utils/formatNegativeNumber";
 import { SquarePen } from "lucide-react";
 
 function Employees() {
@@ -110,7 +108,7 @@ function Employees() {
 
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
-      
+
       return;
     }
 
@@ -159,10 +157,14 @@ function Employees() {
           });
         });
       } else {
-        toast.error(err.response?.data?.message || err.message || t("employees_addFail") || "Submission failed");
+        toast.error(
+          err.response?.data?.message ||
+            err.message ||
+            t("employees_addFail") ||
+            "Submission failed",
+        );
       }
-    }
-    finally {
+    } finally {
       setLoading(false);
     }
   };
@@ -183,7 +185,10 @@ function Employees() {
     { header: t("employees_nationalId"), accessor: "national_id" },
     { header: t("employees_phone"), accessor: "phone" },
     { header: t("employees_address"), accessor: "address" },
-    { header: t("employees_salary"), accessor: "salary" },
+    {
+      header: t("employees_salary"),
+      accessor: (row) => <NegativeNumberDisplay value={row.salary} />,
+    },
     {
       header: t("employees_status"),
       accessor: (row) =>
@@ -192,18 +197,23 @@ function Employees() {
     {
       header: t("employees_actions"),
       accessor: (row) => (
-        <div style={{width:"fit-content"}} className="d-flex border mx-auto rounded">
+        <div
+          style={{ width: "fit-content" }}
+          className="d-flex border mx-auto rounded"
+        >
           <Can permission="employee_update">
             <button
               className="btn btn-sm btn-primary mx-1 no-style"
-              onClick={() => handleEdit(row)}>
+              onClick={() => handleEdit(row)}
+            >
               <SquarePen />
             </button>
           </Can>
           <Can permission="employee_delete">
             <button
               className="btn btn-sm btn-danger no-style"
-              onClick={() => handleDeleteClick(row.uuid)}>
+              onClick={() => handleDeleteClick(row.uuid)}
+            >
               <FontAwesomeIcon icon={faTrash} />
             </button>
           </Can>
@@ -218,153 +228,175 @@ function Employees() {
       <Mytitle title={t("employees_title")} />
 
       <ModalForm
-  show={showModal}
-  onClose={() => setShowModal(false)}
-  title={`${editId ? t("employees_editTitle") : t("employees_addTitle")} ${formData?.name || ""}`}
-  onSubmit={handleSubmit}
-  loading={loading}
-  mode="form"
-  size="lg"
->
-  {/* السطر الأول: الحالة والفرع */}
-  <div className="row">
-    {editId && (
-      <div className="col-md-6 mb-3">
-        <MyInput
-          value={formData.active}
-          onChange={(e) => setFormData({ ...formData, active: e.target.value })}
-          error={errors.active?.[0]}
-          as="select"
-          options={[
-            { value: "", label: t("employees_selectStatus") },
-            { value: 1, label: t("employees_active") },
-            { value: 0, label: t("employees_inactive") },
-          ]}
-        />
-      </div>
-    )}
+        show={showModal}
+        onClose={() => setShowModal(false)}
+        title={`${editId ? t("employees_editTitle") : t("employees_addTitle")} ${formData?.name || ""}`}
+        onSubmit={handleSubmit}
+        loading={loading}
+        mode="form"
+        size="lg"
+      >
+        {/* السطر الأول: الحالة والفرع */}
+        <div className="row">
+          {editId && (
+            <div className="col-md-6 mb-3">
+              <MyInput
+                value={formData.active}
+                onChange={(e) =>
+                  setFormData({ ...formData, active: e.target.value })
+                }
+                error={errors.active?.[0]}
+                as="select"
+                options={[
+                  { value: "", label: t("employees_selectStatus") },
+                  { value: 1, label: t("employees_active") },
+                  { value: 0, label: t("employees_inactive") },
+                ]}
+              />
+            </div>
+          )}
 
-    <div className={editId ? "col-md-6 mb-3" : "col-md-12 mb-3"}>
-      <MyInput
-        label={t("employees_branch")}
-        value={formData.branch_id}
-        onChange={(e) => setFormData({ ...formData, branch_id: e.target.value })}
-        error={errors.branch_id?.[0]}
-        as="select"
-        options={[
-          { value: "", label: t("employees_select_branch") },
-          ...branches.map((b) => ({ value: b.uuid, label: b.name })),
-        ]}
-      />
-    </div>
-  </div>
+          <div className={editId ? "col-md-6 mb-3" : "col-md-12 mb-3"}>
+            <MyInput
+              label={t("employees_branch")}
+              value={formData.branch_id}
+              onChange={(e) =>
+                setFormData({ ...formData, branch_id: e.target.value })
+              }
+              error={errors.branch_id?.[0]}
+              as="select"
+              options={[
+                { value: "", label: t("employees_select_branch") },
+                ...branches.map((b) => ({ value: b.uuid, label: b.name })),
+              ]}
+            />
+          </div>
+        </div>
 
-  {/* السطر الثاني: الاسم والسن */}
-  <div className="row">
-    <div className="col-md-6 mb-3">
-      <MyInput
-        label={t("employees_name")}
-        value={formData.name}
-        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-        error={errors.name?.[0]}
-        required={true}
-      />
-    </div>
-    <div className="col-md-6 mb-3">
-      <MyInput
-        label={t("employees_age")}
-        type="number"
-        value={formData.age}
-        onChange={(e) => setFormData({ ...formData, age: e.target.value })}
-        error={errors.age?.[0]}
-      />
-    </div>
-  </div>
+        {/* السطر الثاني: الاسم والسن */}
+        <div className="row">
+          <div className="col-md-6 mb-3">
+            <MyInput
+              label={t("employees_name")}
+              value={formData.name}
+              onChange={(e) =>
+                setFormData({ ...formData, name: e.target.value })
+              }
+              error={errors.name?.[0]}
+              required={true}
+            />
+          </div>
+          <div className="col-md-6 mb-3">
+            <MyInput
+              label={t("employees_age")}
+              type="number"
+              value={formData.age}
+              onChange={(e) =>
+                setFormData({ ...formData, age: e.target.value })
+              }
+              error={errors.age?.[0]}
+            />
+          </div>
+        </div>
 
-  {/* السطر الثالث: الجنس والرقم القومي */}
-  <div className="row">
-    <div className="col-md-6 mb-3">
-      <MyInput
-        value={formData.gender}
-        onChange={(e) => setFormData({ ...formData, gender: e.target.value })}
-        error={errors.gender?.[0]}
-        as="select"
-        options={[
-          { value: "", label: t("employees_selectGender") },
-          { value: "male", label: t("employees_male") },
-          { value: "female", label: t("employees_female") },
-        ]}
-      />
-    </div>
-    <div className="col-md-6 mb-3">
-      <MyInput
-        label={t("employees_nationalId")}
-        value={formData.national_id}
-        onChange={(e) => setFormData({ ...formData, national_id: e.target.value })}
-        error={errors.national_id?.[0]}
-        required={true}
-      />
-    </div>
-  </div>
+        {/* السطر الثالث: الجنس والرقم القومي */}
+        <div className="row">
+          <div className="col-md-6 mb-3">
+            <MyInput
+              value={formData.gender}
+              onChange={(e) =>
+                setFormData({ ...formData, gender: e.target.value })
+              }
+              error={errors.gender?.[0]}
+              as="select"
+              options={[
+                { value: "", label: t("employees_selectGender") },
+                { value: "male", label: t("employees_male") },
+                { value: "female", label: t("employees_female") },
+              ]}
+            />
+          </div>
+          <div className="col-md-6 mb-3">
+            <MyInput
+              label={t("employees_nationalId")}
+              value={formData.national_id}
+              onChange={(e) =>
+                setFormData({ ...formData, national_id: e.target.value })
+              }
+              error={errors.national_id?.[0]}
+              required={true}
+            />
+          </div>
+        </div>
 
-  {/* السطر الرابع: الهاتف والعنوان */}
-  <div className="row">
-    <div className="col-md-6 mb-3">
-      <MyInput
-        label={t("employees_phone")}
-        value={formData.phone}
-        onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-        error={errors.phone?.[0]}
-      />
-    </div>
-    <div className="col-md-6 mb-3">
-      <MyInput
-        label={t("employees_address")}
-        value={formData.address}
-        onChange={(e) => setFormData({ ...formData, address: e.target.value })}
-        error={errors.address?.[0]}
-      />
-    </div>
-  </div>
+        {/* السطر الرابع: الهاتف والعنوان */}
+        <div className="row">
+          <div className="col-md-6 mb-3">
+            <MyInput
+              label={t("employees_phone")}
+              value={formData.phone}
+              onChange={(e) =>
+                setFormData({ ...formData, phone: e.target.value })
+              }
+              error={errors.phone?.[0]}
+            />
+          </div>
+          <div className="col-md-6 mb-3">
+            <MyInput
+              label={t("employees_address")}
+              value={formData.address}
+              onChange={(e) =>
+                setFormData({ ...formData, address: e.target.value })
+              }
+              error={errors.address?.[0]}
+            />
+          </div>
+        </div>
 
-  {/* السطر الخامس: المرتب (ممكن تخليه واخد نص السطر أو السطر كله) */}
-  <div className="row">
-    <div className="col-md-6 mb-3">
-      <MyInput
-        label={t("employees_salary")}
-        type="number"
-        value={formData.salary}
-        onChange={(e) => setFormData({ ...formData, salary: e.target.value })}
-        error={errors.salary?.[0]}
-        required={true}
-      />
-    </div>
-  </div>
+        {/* السطر الخامس: المرتب (ممكن تخليه واخد نص السطر أو السطر كله) */}
+        <div className="row">
+          <div className="col-md-6 mb-3">
+            <MyInput
+              label={t("employees_salary")}
+              type="number"
+              value={formData.salary}
+              onChange={(e) =>
+                setFormData({ ...formData, salary: e.target.value })
+              }
+              error={errors.salary?.[0]}
+              required={true}
+            />
+          </div>
+        </div>
 
-  {/* المرفقات */}
-  <div className="row">
-    <div className="col-md-12 d-flex justify-content-center-center">
-      <PremiumUploader
-        title={t("attachments")}
-        name="attachment"
-        preview={formData.attachment_preview}
-        onDelete={() => {
-          setFormData({ ...formData, attachment: null, attachment_preview: null });
-        }}
-        onChange={(e) => {
-          if (e.target.files && e.target.files[0]) {
-            setFormData({
-              ...formData,
-              attachment: e.target.files[0],
-              attachment_preview: URL.createObjectURL(e.target.files[0]),
-            });
-          }
-        }}
-        accept="image/*"
-      />
-    </div>
-  </div>
-</ModalForm>
+        {/* المرفقات */}
+        <div className="row">
+          <div className="col-md-12 d-flex justify-content-center-center">
+            <PremiumUploader
+              title={t("attachments")}
+              name="attachment"
+              preview={formData.attachment_preview}
+              onDelete={() => {
+                setFormData({
+                  ...formData,
+                  attachment: null,
+                  attachment_preview: null,
+                });
+              }}
+              onChange={(e) => {
+                if (e.target.files && e.target.files[0]) {
+                  setFormData({
+                    ...formData,
+                    attachment: e.target.files[0],
+                    attachment_preview: URL.createObjectURL(e.target.files[0]),
+                  });
+                }
+              }}
+              accept="image/*"
+            />
+          </div>
+        </div>
+      </ModalForm>
 
       <ModalForm
         show={showDeleteModal}
@@ -374,7 +406,8 @@ function Employees() {
         loading={deleting}
         mode="confirm"
         confirmText={t("employees_deleteConfirm")}
-        cancelText={t("employees_cancel")}>
+        cancelText={t("employees_cancel")}
+      >
         {t("employees_deleteQuestion")}
       </ModalForm>
 

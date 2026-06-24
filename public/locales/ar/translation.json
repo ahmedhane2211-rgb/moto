@@ -1179,6 +1179,11 @@
   "total_creditors": "إجمالي الدائنين",
   "debtors": "العملاء المدينون",
   "cash_distribution": "توزيع السيولة",
-  "debtor": "مدين"
+  "debtor": "مدين",
+  "withdraw_cannot_exceed_salary": "لا يمكن إعطاء الموظف سلفة أكبر من قيمة الراتب الخاص به",
+  "back": "العودة",
+  "discountReward_cashBalance": "رصيد الخزنة",
+  "discountReward_bankBalance": "رصيد البنك"
+
   
 }
