@@ -1,0 +1,572 @@
+/* .form-floating > label {
+  left: unset !important;
+  right: 0 !important;
+  padding: 1rem 0rem !important;
+} */
+
+/* ================= RTL ================= */
+[dir="rtl"] .form-floating>label {
+  right: 0.75rem;
+  left: auto;
+  text-align: right;
+  transform-origin: right top;
+}
+
+/* ================= LTR ================= */
+[dir="ltr"] .form-floating>label {
+  left: 0.75rem;
+  right: auto;
+  text-align: left;
+  transform-origin: left top;
+}
+
+
+/* select {
+  direction: rtl !important;
+  padding-right: 10px !important;
+  background-position: left 8px center !important;
+  background-repeat: no-repeat !important;
+} */
+
+[dir="rtl"] select {
+  direction: rtl;
+  padding-right: 10px;
+  text-align: right;
+  background-position: left 8px center;
+}
+
+[dir="ltr"] select {
+  direction: ltr;
+  padding-left: 10px;
+  text-align: left;
+  background-position: right 8px center;
+}
+
+
+/* .my-input-container .form-control {
+  font-family: "Tajawal", sans-serif;
+  direction: rtl;
+  text-align: right;
+  background-color: #f1f1f1;
+  border: 2px solid #ccc;
+  border-radius: 12px;
+  padding: 12px 15px;
+  transition: all 0.3s ease-in-out;
+} */
+
+[dir="rtl"] .my-input-container .form-control {
+  font-family: "Tajawal", sans-serif;
+  direction: rtl;
+  text-align: right;
+  background-color: #f1f1f1;
+  border: 3px solid #9CA3AF;
+  border-radius: 12px;
+  padding: 12px 15px;
+  transition: all 0.3s ease-in-out;
+}
+
+[dir="ltr"] .my-input-container .form-control {
+  font-family: "Tajawal", sans-serif;
+  direction: ltr;
+  text-align: left;
+  background-color: #f1f1f1;
+  border: 2px solid #ccc;
+  border-radius: 12px;
+  padding: 12px 15px;
+  transition: all 0.3s ease-in-out;
+}
+
+
+/* .my-input-container .form-control:focus {
+  background-color: #fff;
+  border-color: #4e73df;
+  box-shadow: 0 0 8px rgba(78, 115, 223, 0.4);
+  outline: none;
+} */
+
+.my-input-container .form-label {
+  font-weight: bold;
+  font-size: 14px;
+  color: #333;
+  right: 0;
+  text-align: right;
+}
+
+.my-input-container label {
+  padding-right: 5px !important;
+}
+
+.my-btn {
+  background-color: var(--button-pr) !important;
+  border: none !important;
+  font-weight: bold;
+  transition: all 0.3s ease-in-out;
+}
+
+.my-btn:hover {
+  background-color: var(--button-pr-hover) !important;
+}
+
+.my-btn:disabled {
+  background-color: #999 !important;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* 🎨 ألوان الناف بار (الشريط العلوي) */
+.navbar {
+  background: var(--navbar-bg);
+  /* ✅ يأخذ اللون من المتغير مباشرة */
+  padding: 10px 20px;
+  direction: rtl;
+  text-align: right;
+  transition: background 0.3s;
+  color: #ffffff;
+  /* النص دائما أبيض في الناف بار */
+}
+
+[data-bs-theme="light"] .sidebar {
+  background: var(--sidebar-bg);
+}
+
+/* ❌ لم نعد بحاجة لتحديد الألوان هنا لأننا نستخدم المتغيرات */
+/* [data-bs-theme="light"] .navbar { ... } */
+/* [data-bs-theme="dark"] .navbar { ... } */
+
+
+[dir="rtl"] .navbar {
+  padding: 10px 20px;
+  direction: rtl;
+  text-align: right;
+}
+
+[dir="ltr"] .navbar {
+  padding: 10px 20px;
+  direction: ltr;
+  text-align: left;
+}
+
+
+.navbar-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 5px 50px;
+}
+
+.navbar-title {
+  margin: 0;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.menu-btn {
+  background: transparent;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #736b6b;
+}
+
+/* 🎨 ألوان القائمة الجانبية (Sidebar) */
+.sidebar {
+  background: var(--navbar-bg);
+  /* ✅ لون الخلفية من المتغيرات */
+  color: var(--sidebar-text);
+  /* ✅ لون النص حسب الوضع */
+  /* border-left: 1px solid var(--border-color); */
+  /* حدود خفيفة */
+  position: fixed;
+  top: 0;
+  right: -250px;
+  width: 250px;
+  height: 100%;
+  padding: 20px;
+  transition: right 0.3s ease, background-color 0.3s, color 0.3s;
+  z-index: 1000;
+  overflow: auto;;
+  
+}
+
+/* ❌ لم نعد بحاجة لتكرار الأكواد هنا */
+/* [data-bs-theme="light"] .sidebar { ... } */
+/* [data-bs-theme="dark"] .sidebar { ... } */
+
+/* ===== RTL (عربي) ===== */
+[dir="rtl"] .sidebar {
+  right: -250px;
+  left: unset;
+
+}
+
+[dir="rtl"] .sidebar.open {
+  right: 0;
+  text-align: start;
+
+}
+
+/* ===== LTR (إنجليزي) ===== */
+[dir="ltr"] .sidebar {
+  left: -250px;
+  right: unset;
+}
+
+[dir="ltr"] .sidebar.open {
+  left: 0;
+  text-align: left;
+}
+
+
+/* .sidebar.open {
+  right: 0;
+} */
+
+.sidebar .close-btn {
+  background: transparent;
+  border: none;
+  font-size: 28px;
+  color: white;
+  cursor: pointer;
+  float: left;
+}
+
+[dir="rtl"] .sidebar .close-btn {
+  background: transparent;
+  border: none;
+  font-size: 28px;
+  color: white;
+  cursor: pointer;
+  float: left;
+}
+
+[dir="ltr"] .sidebar .close-btn {
+  background: transparent;
+  border: none;
+  font-size: 28px;
+  color: white;
+  cursor: pointer;
+  float: right;
+}
+
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin-top: 50px;
+}
+
+/* .sidebar ul li {
+  margin: 15px 0;
+  text-align: end;
+} */
+
+/* 🇸🇦 عربي */
+[dir="rtl"] .sidebar ul li {
+  text-align: right;
+}
+
+/* 🇺🇸 إنجليزي */
+[dir="ltr"] .sidebar ul li {
+  text-align: left;
+}
+
+
+/* .sidebar ul li a {
+  text-decoration: none;
+  color: white;
+  font-size: 18px;
+  transition: color 0.3s;
+  text-align: end;
+} */
+
+.sidebar ul li a {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+
+.sidebar ul li a {
+  display: flex;
+  align-items: center;
+  color: inherit;
+  /* Inherit from sidebar */
+
+  gap: 8px;
+  text-decoration: none;
+  padding: 8px;
+  border-radius: 5px;
+  transition: background 0.2s;
+  font-size: 15px;
+
+}
+
+[data-bs-theme="dark"] .permission-group {
+  background: #1f1f2e;
+  border-color: #333;
+}
+
+/* Removed to avoid conflict with index.css */
+
+[dir="rtl"] .sidebar ul li a {
+  flex-direction: row;
+  /* الأيقونة قبل النص */
+  justify-content: flex-start;
+  /* يبدأ من اليمين */
+  text-align: right;
+  padding-right: 30px;
+  padding-left: 8px;
+}
+
+
+/* ===== إنجليزي (LTR) ===== */
+[dir="ltr"] .sidebar ul li a {
+  flex-direction: row;
+  text-align: left;
+  justify-content: flex-start;
+  /* يبدأ من الشمال */
+  /* color: white; */
+  font-size: 18px;
+  transition: color 0.3s;
+  padding-left: 30px;
+}
+
+.sidebar ul li a {
+  color: inherit;
+  /* Inherit from sidebar color */
+}
+
+/* 
+[dir="rtl"] .sidebar ul li a {
+  flex-direction: row-reverse;
+    color: white;
+  font-size: 18px;
+  transition: color 0.3s;
+  text-align: end;
+}
+
+[dir="ltr"] .sidebar ul li a {
+  flex-direction: row;
+    color: white;
+  font-size: 18px;
+  transition: color 0.3s;
+  text-align: end;
+} */
+
+
+.sidebar ul li a:hover {
+  color: #9a8c98;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  backdrop-filter: blur(4px);
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 900;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar ul li {
+  margin: 10px 0;
+}
+
+.sidebar ul li a {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-direction: row-reverse;
+  text-decoration: none;
+  padding: 8px;
+  border-radius: 5px;
+  transition: background 0.2s;
+  font-size: 15px;
+}
+
+.sidebar ul li a.active {
+  background: var(--active-color);
+  border-radius: 20px;
+  color: #fff;
+}
+
+.sidebar ul li a:hover {
+  background: var(--button-pr-hover) !important;
+  border-radius: 20px;
+}
+
+.sidebar .section-title {
+  font-size: 18px;
+  font-weight: bold;
+  color: var(--sidebar-text);
+  opacity: 0.8;
+  /* Slightly transparent for hierarchy */
+  margin-top: 15px;
+  margin-bottom: 5px;
+  padding: 10px 15px;
+  text-transform: uppercase;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.sub-section-title {
+  padding: 10px 15px 10px 25px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 15px;
+  color: var(--sidebar-text);
+  opacity: 0.9;
+  transition: background 0.3s;
+}
+
+[dir="rtl"] .sub-section-title {
+  padding: 10px 25px 10px 15px;
+}
+
+.sub-section-title:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.sub-section-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.sub-section-list li a {
+  padding: 8px 40px !important;
+  font-size: 14px !important;
+}
+
+[dir="rtl"] .sub-section-list li a {
+  padding: 8px 40px 8px 8px !important;
+}
+
+.sub-chevron {
+  font-size: 0.8em;
+}
+
+.sidebar-user {
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  background: #f5f5f5;
+  border-radius: 10px;
+  margin: 10px;
+  gap: 10px;
+}
+
+.user-avatar {
+  color: #555;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-name {
+  font-weight: bold;
+  margin: 0;
+}
+
+.profile-link {
+  font-size: 0.9rem;
+  color: #007bff;
+  text-decoration: none;
+}
+
+.profile-link:hover {
+  text-decoration: underline;
+}
+
+.logout-btn {
+  width: 90%;
+  margin: 10px auto;
+  padding: 8px;
+  background: #606465;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  justify-content: center;
+}
+
+.logout-btn:hover {
+  background: #6b6f70;
+}
+
+.sidebar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+  background: #0f172a;
+  border-radius: 10px;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #3b82f6, #2563eb);
+  border-radius: 10px;
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #2563eb, #1d4ed8);
+}
+
+.subscription-alert {
+  background: red;
+  padding: 5px;
+  font-size: 18px;
+  font-weight: 500;
+  border-radius: 5px;
+}
+
+/* Moved to index.css for theme consistency */
+
+
+.group-title {
+  font-weight: bold;
+  font-size: 1.2rem;
+  color: #0c3169;
+  border-bottom: 2px solid #e5e7eb;
+  padding-bottom: 8px;
+  margin-bottom: 20px;
+}
+
+/* Removed to avoid conflict with index.css */
+
+[dir="rtl"] table {
+  direction: rtl;
+  text-align: right;
+}
+
+[dir="ltr"] table {
+  direction: ltr;
+  text-align: left;
+}
+
+/* Date Filter Row Direction Handling */
+/* [dir="rtl"] .date-filter-row {
+  flex-direction: row-reverse;
+}
+
+[dir="ltr"] .date-filter-row {
+  flex-direction: row;
+} */

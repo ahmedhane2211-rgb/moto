@@ -1,0 +1,2416 @@
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+/* 🎨 تعريف متغيرات الألوان للنظام بالكامل (CSS Variables) */
+:root {
+  /* ☀️ Premium Light Mode (Automotive Aesthetic) */
+  --main-bg: #c1c1c1;
+  /* Clean, soft background */
+  --card-bg: #dfdcdc;
+  /* Pure white for cards */
+  --text-main: #0F172A;
+  /* Deep slate - excellent contrast */
+  --text-secondary: #475569;
+  /* Slate 600 - enhanced readability */
+  --primary-color: #1f4252;
+  /* Sky blue - modern & energetic */
+  --primary-hover: #0284C7;
+  /* Darker sky blue for hover */
+  --accent-color: #06B6D4;
+  /* Cyan accent */
+  --border-color: #E2E8F0;
+  /* Slate 200 - subtle borders */
+  --border-hover: #CBD5E1;
+  /* Slate 300 - interactive borders */
+  --input-bg: #FFFFFF;
+  /* Clean input fields */
+  --navbar-bg: #a7a8ac;
+  /* Refined blue navbar */
+  --sidebar-bg:#94979b;
+  /* Darker blue for hierarchy */
+  --sidebar-text: #000000;
+  /* White sidebar text */
+  /* Button */
+  --button-pr: #737c84;
+  --button-pr-hover: #a5aaaf;
+  --active-color: #606465;
+  --active-color-hover: #1681d3;
+  /* 🎨 Semantic Colors */
+  --success-color: #10B981;
+  /* Green for success */
+  --warning-color: #F59E0B;
+  /* Amber for warnings */
+  --error-color: #EF4444;
+  /* Red for errors */
+  
+  /* 🎯 Icon Colors (أيقونات الإجراءات) */
+  --icon-edit-color: #0EA5E9;
+  /* Sky blue for edit icon */
+  --icon-delete-color: #EF4444;
+  /* Red for delete icon */
+  --icon-view-color: #10B981;
+  /* Green for view icon */
+  
+  /* 📊 Table Themes (Light Mode) */
+  --table-header-bg: #0369A1;
+  --table-body-bg: white;
+  --table-row-hover: #F1F5F9;
+  --table-text: var(--text-main);
+
+  /* 🔑 Permission Cards (Light Mode) */
+  --perm-selected-bg: var(--primary-color);
+  --perm-selected-text: #FFFFFF;
+}
+
+/* 🌙 الألوان في الوضع الليلي */
+[data-bs-theme="dark"] {
+  --main-bg: #0d0d12;
+  /* Deep slate background */
+  --card-bg: #16161a;
+  /* Elevated surface */
+  --text-main: #F1F5F9;
+  /* Soft white - excellent contrast */
+  --text-secondary: #94A3B8;
+  /* Slate 400 - distinct secondary */
+  --primary-color: #38BDF8;
+  /* Bright sky blue */
+  --primary-hover: #0EA5E9;
+  /* Slightly darker hover */
+  --accent-color: #22D3EE;
+  /* Vibrant cyan */
+  --border-color: #334155;
+  /* Slate 700 - subtle borders */
+  --border-hover: #475569;
+  /* Slate 600 - interactive borders */
+  --input-bg: #334155;
+  /* Lighter for interaction */
+  --navbar-bg: #0D0D12;
+  /* Consistent brand blue */
+  /* Matches card elevation */
+  --sidebar-text: #F1F5F9;
+  /* Soft white text */
+  --button-pr: #4ba3f0;
+  --button-pr-hover: #1681d3;
+  --active-color: #1681d3;
+  /* 🎨 Semantic Colors (Dark Mode) */
+  --success-color: #34D399;
+  /* Bright green */
+  --warning-color: #FBBF24;
+  /* Bright amber */
+  --error-color: #F87171;
+  /* Softer red */
+
+  /* 🎯 Icon Colors (أيقونات الإجراءات) */
+  --icon-edit-color: #38BDF8;
+  /* Bright sky blue for edit icon */
+  --icon-delete-color: #F87171;
+  /* Softer red for delete icon */
+  --icon-view-color: #34D399;
+  /* Bright green for view icon */
+
+  /* 📊 Table Themes (Dark Mode) */
+  --table-header-bg: #0369A1;
+  --table-body-bg: #1E293B;
+  --table-row-hover: #334155;
+  --table-text: var(--text-main);
+
+  /* 🔑 Permission Cards (Dark Mode) */
+  --perm-selected-bg: #38BDF8;
+  --perm-selected-text: #0F172A;
+}
+
+
+
+/* ============================================================
+   🎬 GLOBAL ANIMATION KEYFRAMES
+   ============================================================ */
+
+/* Fade In Up - العنصر يظهر من تحت */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Fade In Down */
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Fade In Scale - يظهر مع تكبير */
+@keyframes fadeInScale {
+  from { opacity: 0; transform: scale(0.92); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+/* Slide In Right */
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(40px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+/* Slide In Left */
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-40px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+/* Pulse Glow - نبض متوهج */
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(14, 165, 233, 0.4); }
+  50%      { box-shadow: 0 0 20px 5px rgba(14, 165, 233, 0.15); }
+}
+
+/* Shimmer - تأثير لمعة */
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* Float - يطفو خفيف */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-6px); }
+}
+
+/* Bounce In */
+@keyframes bounceIn {
+  0%   { opacity: 0; transform: scale(0.3); }
+  50%  { transform: scale(1.05); }
+  70%  { transform: scale(0.95); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+/* Ripple */
+@keyframes ripple {
+  to { transform: scale(4); opacity: 0; }
+}
+
+/* Spin slow */
+@keyframes spinSlow {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* Gradient shift */
+@keyframes gradientShift {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Row entrance */
+@keyframes rowSlideIn {
+  from { opacity: 0; transform: translateX(15px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+/* Page transition - for route changes */
+@keyframes pageTransition {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ============================================================
+   🖌️ BASE STYLES
+   ============================================================ */
+body {
+  font-family: "Tajawal", sans-serif !important;
+  margin: 0;
+  background-color: var(--main-bg);
+  color: var(--text-main);
+  transition: background-color 0.4s ease, color 0.4s ease;
+  overflow-x: hidden;
+}
+
+/* ============================================================
+   🃏 CARD & CONTAINER ANIMATIONS
+   ============================================================ */
+
+/* كل الكروت تظهر بأنيميشن */
+.card,
+.report-card,
+.permission-group,
+.premium-upload-card,
+.settings-form .card,
+.invoice-header {
+  animation: fadeInUp 0.5s ease both;
+}
+
+/* Stagger - تأخير الكروت واحدة واحدة */
+.card:nth-child(1) { animation-delay: 0s; }
+.card:nth-child(2) { animation-delay: 0.08s; }
+.card:nth-child(3) { animation-delay: 0.16s; }
+.card:nth-child(4) { animation-delay: 0.24s; }
+.card:nth-child(5) { animation-delay: 0.32s; }
+.card:nth-child(6) { animation-delay: 0.4s; }
+
+/* Hover على الكروت - ترتفع مع ظل */
+.card:hover,
+.report-card:hover,
+.permission-group:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ============================================================
+   📊 TABLE ROW ANIMATIONS
+   ============================================================ */
+
+/* صفوف الجدول تظهر واحدة واحدة */
+.my-table-content tr {
+  animation: rowSlideIn 0.35s ease both;
+}
+
+.my-table-content tr:nth-child(1)  { animation-delay: 0.02s; }
+.my-table-content tr:nth-child(2)  { animation-delay: 0.04s; }
+.my-table-content tr:nth-child(3)  { animation-delay: 0.06s; }
+.my-table-content tr:nth-child(4)  { animation-delay: 0.08s; }
+.my-table-content tr:nth-child(5)  { animation-delay: 0.10s; }
+.my-table-content tr:nth-child(6)  { animation-delay: 0.12s; }
+.my-table-content tr:nth-child(7)  { animation-delay: 0.14s; }
+.my-table-content tr:nth-child(8)  { animation-delay: 0.16s; }
+.my-table-content tr:nth-child(9)  { animation-delay: 0.18s; }
+.my-table-content tr:nth-child(10) { animation-delay: 0.20s; }
+.my-table-content tr:nth-child(n+11) { animation-delay: 0.22s; }
+
+/* Hover على الصف */
+.my-table-content tr {
+  transition: all 0.25s ease;
+  border-bottom: 2px solid red;
+}
+.my-table-content tr:hover {
+  background: var(--table-row-hover) !important;
+  transform: scale(1.005);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+/* Header الجدول يظهر بأنيميشن */
+.my-table-head {
+  animation: fadeInDown 0.4s ease both;
+}
+
+/* ============================================================
+   🔘 BUTTON ANIMATIONS
+   ============================================================ */
+
+/* كل الأزرار عندها transition */
+.btn,
+.my-btn,
+.my-btn-dash,
+.logout-btn,
+button {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Hover effect */
+.my-btn:hover {
+  background-color: #063c66 !important;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(8, 76, 136, 0.35);
+}
+
+.my-btn-dash:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(14, 165, 233, 0.3);
+}
+
+/* Ripple effect على الأزرار */
+.btn::after,
+.my-btn::after,
+.my-btn-dash::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 5px;
+  height: 5px;
+  background: rgba(255, 255, 255, 0.4);
+  border-radius: 50%;
+  transform: scale(0);
+  opacity: 0;
+}
+.btn:active::after,
+.my-btn:active::after,
+.my-btn-dash:active::after {
+  animation: ripple 0.5s ease-out;
+}
+
+/* أيقونات الإجراءات - bounce عند hover */
+.no-style:hover {
+  transform: scale(1.25) !important;
+  transition: transform 0.2s cubic-bezier(0.68, -0.55, 0.265, 1.55) !important;
+}
+
+.no-style:active {
+  transform: scale(0.9) !important;
+}
+
+/* ============================================================
+   📱 MODAL ANIMATIONS
+   ============================================================ */
+
+.modal.show .modal-dialog {
+  animation: fadeInScale 0.35s ease both;
+}
+
+.modal-content {
+  transition: transform 0.3s ease;
+}
+
+/* ============================================================
+   📝 INPUT ANIMATIONS
+   ============================================================ */
+
+.form-control,
+.form-select,
+textarea {
+  transition: all 0.3s ease !important;
+}
+
+.form-control:focus,
+.form-select:focus {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 15px rgba(14, 165, 233, 0.2) !important;
+}
+
+/* Float label animation */
+.form-floating > label {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* ============================================================
+   🎯 SPECIAL EFFECTS
+   ============================================================ */
+
+/* Shimmer loading effect */
+.shimmer {
+  background: linear-gradient(90deg, transparent 30%, rgba(255,255,255,0.3) 50%, transparent 70%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+/* Glow text */
+.glow-text {
+  text-shadow: 0 0 10px rgba(14, 165, 233, 0.3);
+}
+
+/* Pulse border */
+.pulse-border {
+  animation: pulseGlow 2s infinite;
+}
+
+/* Float animation */
+.float-anim {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* ============================================================
+   ⚡ NAVBAR ANIMATION
+   ============================================================ */
+
+.navbar {
+  animation: fadeInDown 0.4s ease both;
+}
+
+.menu-btn {
+  transition: all 0.3s ease;
+}
+.menu-btn:hover {
+  transform: scale(1.15) rotate(5deg);
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
+}
+.menu-btn:active {
+  transform: scale(0.9);
+}
+
+/* Navbar logo bounce */
+.navbar-logo {
+  transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55) !important;
+}
+.navbar-logo:hover {
+  transform: scale(1.1) rotate(-5deg) !important;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Language toggle */
+.lang-toggle {
+  transition: all 0.3s ease;
+}
+.lang-toggle:hover {
+  transform: translateY(-2px);
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+}
+
+/* ============================================================
+   � SIDEBAR ANIMATIONS
+   ============================================================ */
+
+/* روابط الـ sidebar تظهر واحدة واحدة لما يفتح */
+.sidebar.open ul li {
+  animation: slideInRight 0.3s ease both;
+}
+[dir="rtl"] .sidebar.open ul li {
+  animation: slideInLeft 0.3s ease both;
+}
+.sidebar.open ul li:nth-child(1)  { animation-delay: 0.03s; }
+.sidebar.open ul li:nth-child(2)  { animation-delay: 0.06s; }
+.sidebar.open ul li:nth-child(3)  { animation-delay: 0.09s; }
+.sidebar.open ul li:nth-child(4)  { animation-delay: 0.12s; }
+.sidebar.open ul li:nth-child(5)  { animation-delay: 0.15s; }
+.sidebar.open ul li:nth-child(6)  { animation-delay: 0.18s; }
+.sidebar.open ul li:nth-child(7)  { animation-delay: 0.21s; }
+.sidebar.open ul li:nth-child(8)  { animation-delay: 0.24s; }
+.sidebar.open ul li:nth-child(9)  { animation-delay: 0.27s; }
+.sidebar.open ul li:nth-child(10) { animation-delay: 0.30s; }
+.sidebar.open ul li:nth-child(n+11) { animation-delay: 0.33s; }
+
+/* Hover على عناصر الـ sidebar */
+.sidebar ul li a {
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+.sidebar ul li a:hover {
+  background: rgba(255, 255, 255, 0.08) !important;
+  padding-right: 35px !important;
+  color: var(--accent-color) !important;
+}
+[dir="ltr"] .sidebar ul li a:hover {
+  padding-left: 35px !important;
+  padding-right: 8px !important;
+}
+
+
+
+/* Section title hover */
+.sidebar .section-title {
+  transition: all 0.3s ease;
+}
+.sidebar .section-title:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+}
+
+/* Close button */
+.sidebar .close-btn {
+  transition: all 0.3s ease;
+}
+.sidebar .close-btn:hover {
+  transform: rotate(90deg) scale(1.2);
+  color: #ef4444 !important;
+}
+
+/* Logout button */
+.logout-btn {
+  transition: all 0.3s ease !important;
+}
+.logout-btn:hover {
+  transform: translateY(-2px) !important;
+}
+
+/* Overlay fade */
+.overlay {
+  animation: fadeIn 0.3s ease both;
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ============================================================
+   📊 PERMISSION CARDS
+   ============================================================ */
+
+.permission-card {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  animation: fadeInUp 0.4s ease both;
+}
+
+.permission-card:hover {
+  transform: translateY(-4px) !important;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12) !important;
+}
+
+.permission-card.selected {
+  animation: bounceIn 0.4s ease both;
+}
+
+/* ============================================================
+   � SUBSCRIPTION ALERT
+   ============================================================ */
+
+.navbar .alert {
+  animation: fadeInDown 0.5s ease both, pulseGlow 3s infinite 1s;
+}
+
+/* ============================================================
+   🖌️ BASE STYLES (continued)
+   ============================================================ */
+
+.login-image {
+  background-image: url("../public/Images/login.png");
+  background-size: cover;
+  background-position: center;
+}
+
+.login-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  color: var(--text-main);
+  animation: fadeInScale 0.5s ease both;
+}
+
+.login-con {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background-image: url("/images.jfif");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+
+.login-con::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  /* Dark overlay for better readability */
+  backdrop-filter: blur(5px);
+  z-index: 0;
+}
+
+.auth-background-shapes {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.shape {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.6;
+}
+
+.shape-1 {
+  width: 400px;
+  height: 400px;
+  background: var(--primary-color);
+  top: -100px;
+  right: -100px;
+}
+
+.shape-2 {
+  width: 300px;
+  height: 300px;
+  background: #00b4d8;
+  bottom: -50px;
+  left: -50px;
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 24px !important;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
+}
+
+[data-bs-theme="dark"] .glass-card {
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.login-card {
+  z-index: 1;
+  transition: transform 0.3s ease;
+}
+
+.login-image-container {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.login-image-inner {
+  width: 100%;
+  max-width: 500px;
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.1));
+}
+
+.my-title {
+  /* direction: rtl; */
+  color: var(--text-main);
+}
+
+
+
+span.pointer {
+  cursor: pointer;
+  font-size: 17px;
+  font-weight: 600;
+}
+
+.my-table-container {
+  border: 0;
+}
+
+
+/* google button */
+.google-login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+/*switch dark and lite mode */
+
+/* From Uiverse.io by rishichawda */
+/* The switch - the box around the slider */
+#theme-toggle-button {
+  font-size: 17px;
+  position: relative;
+  display: inline-block;
+  width: 3em;
+  cursor: pointer;
+}
+
+/* Hide default HTML checkbox */
+#toggle {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+#container,
+#patches,
+#stars,
+#button,
+#sun,
+#moon,
+#cloud {
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 0.25s;
+}
+
+/* night sky background */
+#toggle:checked+svg #container {
+  fill: #2b4360;
+}
+
+/* move button to right when checked */
+#toggle:checked+svg #button {
+  transform: translate(28px, 2.333px);
+}
+
+/* show/hide sun and moon based on checkbox state */
+#sun {
+  opacity: 1;
+}
+
+#toggle:checked+svg #sun {
+  opacity: 0;
+}
+
+#moon {
+  opacity: 0;
+}
+
+#toggle:checked+svg #moon {
+  opacity: 1;
+}
+
+/* show or hide background items on checkbox state */
+#cloud {
+  opacity: 1;
+}
+
+#toggle:checked+svg #cloud {
+  opacity: 0;
+}
+
+#stars {
+  opacity: 0;
+}
+
+#toggle:checked+svg #stars {
+  opacity: 1;
+}
+
+
+/* زر جوجل */
+.google-login-container div[role="button"] {
+  border-radius: 30px !important;
+  padding: 10px 20px !important;
+  transition: all 0.3s ease;
+  font-family: "Cairo", sans-serif;
+  font-size: 16px !important;
+  width: 250px;
+  text-align: center;
+}
+
+/* تأثير hover */
+.google-login-container div[role="button"]:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(66, 133, 244, 0.3);
+}
+
+/* تحسين شكل الأيقونة */
+.google-login-container img {
+  border-radius: 50%;
+  width: 22px !important;
+  height: 22px !important;
+  margin-right: 10px;
+}
+
+/* .my-table-container thead {} */
+
+.my-table-container .my-table-head {
+  border: 0;
+}
+
+/* إضافة border-radius للجدول */
+.my-table-container table {
+  border-radius: 12px;
+  overflow: hidden;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.my-table-container .my-table-head th {
+  padding: 10px;
+  border: none;
+  background: var(--table-header-bg);
+  color: white;
+}
+
+/* تدوير الزوايا العلوية للجدول - RTL (عربي) */
+[dir="rtl"] .my-table-container .my-table-head th:first-child {
+  border-top-right-radius: 6px;
+}
+
+[dir="rtl"] .my-table-container .my-table-head th:last-child {
+  border-top-left-radius: 6px;
+}
+
+/* تدوير الزوايا العلوية للجدول - LTR (إنجليزي) */
+[dir="ltr"] .my-table-container .my-table-head th:first-child {
+  border-top-left-radius: 6px;
+}
+
+[dir="ltr"] .my-table-container .my-table-head th:last-child {
+  border-top-right-radius: 6px;
+}
+
+/* تدوير الزوايا السفلية للجدول - RTL (عربي) */
+[dir="rtl"] .my-table-container .my-table-content tr:last-child td:first-child {
+  border-bottom-right-radius: 12px;
+}
+
+[dir="rtl"] .my-table-container .my-table-content tr:last-child td:last-child {
+  border-bottom-left-radius: 12px;
+}
+
+/* تدوير الزوايا السفلية للجدول - LTR (إنجليزي) */
+[dir="ltr"] .my-table-container .my-table-content tr:last-child td:first-child {
+  border-bottom-left-radius: 12px;
+}
+
+[dir="ltr"] .my-table-container .my-table-content tr:last-child td:last-child {
+  border-bottom-right-radius: 12px;
+}
+
+.my-table-container .my-table-content {
+  border: 0;
+  background: var(--table-body-bg);
+
+}
+
+.my-table-container .my-table-content td {
+  border: 0;
+  background: transparent;
+  color: var(--table-text);
+  font-weight: 500;
+}
+
+
+
+/* .my-table-container .my-table-cell {} */
+
+/* .modal-header {
+  flex-direction: row-reverse;
+  width: 100%;
+  justify-content: space-between;
+} */
+
+
+.modal-header-custom {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: space-between;
+  color: white !important;
+  padding: 1.25rem !important;
+  border-bottom: none !important;
+  position: relative;
+  overflow: hidden;
+}
+
+.modal-header-custom::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  animation: shine-header 3s infinite;
+}
+
+@keyframes shine-header {
+  0% { left: -100%; }
+  20% { left: 100%; }
+  100% { left: 100%; }
+}
+
+/* ===== عربي ===== */
+.modal-header-custom.rtl {
+  direction: rtl;
+}
+
+.modal-header-custom.rtl .modal-title {
+  text-align: right;
+}
+
+.modal-header-custom.rtl .btn-close {
+  margin-left: auto;
+  /* ❌ شمال */
+}
+
+/* ===== إنجليزي ===== */
+.modal-header-custom.ltr {
+  direction: ltr;
+}
+
+.modal-header-custom.ltr .modal-title {
+  text-align: left;
+}
+
+.modal-header-custom.ltr .btn-close {
+  margin-left: auto;
+  /* ❌ يمين */
+}
+
+
+.modal-header .btn-close {
+  margin-left: 0 !important;
+  filter: brightness(0) invert(1) !important;
+}
+
+.my-input-container select {
+  padding: 0 25px !important;
+}
+.newSelect{
+  position: relative;
+  width: 150px;
+  
+}
+.newSelect label{
+  position: absolute;
+  top: -25px;
+  right: 0;
+}
+.newSelect select{
+  width: 100%;
+  height: 50px;
+  border-radius: 50px;
+  background: transparent;
+}
+.no-style {
+  background: transparent !important;
+  border: none !important;
+}
+
+th,
+td {
+  text-align: center !important;
+}
+
+.react-select-container .react-select__control {
+  border-radius: 12px !important;
+}
+
+.react-select-container .react-select__menu {
+  border-radius: 12px !important;
+  overflow: hidden;
+}
+/* 🛠️ إصلاح ألوان حقول الإدخال (Inputs) لتناسب الوضع الليلي والنهاري */
+.form-control,
+.form-select,
+textarea,
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+input[type="date"] {
+  height: 55px !important;
+  background-color: transparent !important;
+  color: var(--text-main) !important;
+  border-radius: 20px !important;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05) !important;
+}
+
+/* Ensure dropdown options are readable */
+option {
+  background-color: var(--card-bg);
+  color: var(--text-main);
+}
+
+/* .form-control:focus,
+.form-select:focus {
+  background-color: var(--input-bg) !important;
+  color: var(--text-main) !important;
+  border-color: var(--primary-color) !important;
+  box-shadow: 0 0 0 0.25rem rgba(98, 0, 238, 0.25) !important;
+} */
+.form-select{
+  border: 3px solid #9CA3AF !important;
+}
+/* إصلاح لون Placeholder في الوضع الليلي */
+::placeholder {
+  color: var(--text-secondary) !important;
+  opacity: 0.7;
+}
+
+/* إصلاح أيقونات القوائم المنسدلة في الوضع الليلي */
+[data-bs-theme="dark"] .form-select {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23ffffff' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e") !important;
+}
+
+/* إصلاح لون العناوين العائمة (Floating Labels) */
+.form-floating>.form-control:focus~label,
+.form-floating>.form-control:not(:placeholder-shown)~label,
+.form-floating>.form-select~label {
+  opacity: 1 !important;
+  transform: scale(0.85) translateY(-0.5rem) translateX(0.15rem) !important;
+  color: var(--text-secondary) !important;
+}
+
+.form-floating>label {
+  transition: opacity 0.1s ease-in-out, transform 0.1s ease-in-out !important;
+  color: var(--text-secondary) !important;
+}
+
+/* إصلاح لون الخلفية عند الملء التلقائي (Autofill) */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px var(--input-bg) inset !important;
+  -webkit-text-fill-color: var(--text-main) !important;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+/* 🛠️ إصلاح ألوان المودال (Modals) */
+.modal-content {
+  background-color: var(--card-bg) !important;
+  color: var(--text-main) !important;
+  border: 1px solid var(--primary-color) !important;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2), 0 0 20px rgba(14, 165, 233, 0.2) !important;
+  overflow: hidden;
+  position: relative;
+  border-radius: 16px !important;
+}
+
+/* تأثير لمعة خفيفة على المودال بالكامل */
+.modal-content::before {
+  content: '';
+  position: absolute;
+  top: -150%;
+  left: -150%;
+  width: 400%;
+  height: 400%;
+  background: linear-gradient(
+    45deg,
+    transparent 45%,
+    rgba(255, 255, 255, 0.05) 50%,
+    transparent 55%
+  );
+  animation: modal-glow 8s infinite linear;
+  pointer-events: none;
+  z-index: 1;
+}
+
+@keyframes modal-glow {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.modal-header,
+.modal-footer {
+  border-color: var(--border-color) !important;
+}
+
+.btn-close {
+  filter: var(--bs-btn-close-white-filter);
+  /* يجعل زر الإغلاق أبيض في الوضع الليلي */
+}
+
+/* Modal Body Direction Handling */
+[dir="rtl"] .modal-body {
+  direction: rtl;
+  text-align: right;
+  background-color: var(--card-bg);
+}
+
+[dir="ltr"] .modal-body {
+  direction: ltr;
+  text-align: left;
+    background-color: var(--card-bg);
+}
+
+/* 🛠️ إصلاح ألوان الجداول (Tables) */
+.table {
+  color: var(--text-main) !important;
+  --bs-table-color: var(--text-main) !important;
+  --bs-table-bg: transparent !important;
+  --bs-table-border-color: var(--border-color) !important;
+  --bs-table-striped-bg: rgba(0, 0, 0, 0.05) !important;
+  --bs-table-striped-color: var(--text-main) !important;
+  --bs-table-active-bg: rgba(0, 0, 0, 0.1) !important;
+  --bs-table-active-color: var(--text-main) !important;
+  --bs-table-hover-bg: rgba(0, 0, 0, 0.075) !important;
+  --bs-table-hover-color: var(--text-main) !important;
+}
+
+[data-bs-theme="dark"] .table-striped>tbody>tr:nth-of-type(odd)>* {
+  --bs-table-accent-bg: rgba(255, 255, 255, 0.05) !important;
+  color: var(--text-main) !important;
+}
+
+[data-bs-theme="dark"] .table-hover>tbody>tr:hover>* {
+  --bs-table-accent-bg: rgba(255, 255, 255, 0.1) !important;
+  color: var(--text-main) !important;
+}
+
+/* إصلاح أيقونة زر الإغلاق في المودال للوضع الليلي */
+[data-bs-theme="dark"] .btn-close {
+  filter: invert(1) grayscale(100%) brightness(200%);
+}
+
+/*************************************/
+
+/* .form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+  direction: rtl;
+} */
+
+[dir="rtl"] .form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+  direction: rtl;
+}
+
+[dir="ltr"] .form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+  direction: ltr;
+}
+
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group.full-width {
+  grid-column: span 2;
+}
+
+/***********************************/
+
+.invoice-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.invoice-header {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+  background: var(--input-bg);
+  border: 1px solid var(--border-color);
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+.services-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+.services-table th,
+.services-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+}
+
+.services-table th {
+  background: var(--input-bg);
+  color: var(--text-main);
+}
+
+/* كل الأعمدة تاخد المساحة بالتساوي */
+.services-table.add-service th:not(:last-child),
+.services-table.add-service td:not(:last-child) {
+  width: auto;
+}
+
+/* العمود الأخير (بتاع الزرار) يكون عرضه على قد المحتوى فقط */
+.services-table.add-service th:last-child,
+.services-table.add-service td:last-child {
+  width: 1%;
+  white-space: nowrap;
+  text-align: center;
+}
+
+.invoice-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  background: var(--input-bg);
+  border: 1px solid var(--border-color);
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+.scroll-invoice-table {
+  overflow: auto;
+}
+
+[dir="rtl"] .scroll-invoice-table {
+  direction: rtl;
+}
+
+[dir="ltr"] .scroll-invoice-table {
+  direction: ltr;
+}
+
+[dir="rtl"] .scroll-invoice-table .services-table {
+  direction: rtl;
+}
+
+[dir="ltr"] .scroll-invoice-table .services-table {
+  direction: ltr;
+}
+
+.scroll-invoice-table .services-table input,
+.scroll-invoice-table .services-table select {
+  width: 100%;
+  border: 3px solid #a9a9a97a;
+  background: transparent;
+  border-radius: 5px;
+}
+
+@media (min-width: 1000px) {
+  .invoices-modal .modal-dialog {
+    max-width: 1400px;
+    width: 900px !important;
+    margin-right: auto;
+    margin-left: auto;
+  }
+}
+
+@media (min-width: 576px) {
+  .invoice .modal-dialog {
+    width: 800px !important;
+    max-width: 1200px !important;
+  }
+}
+
+@media print {
+  .invoice-printing {
+    margin-right: 100px;
+  }
+}
+
+.add-service-btn {
+  background: none;
+  border: 3px solid #80808059;
+  border-radius: 40%;
+  height: 36px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  direction: rtl;
+  transition: 0.5s;
+}
+
+.add-service-btn:hover {
+  background-color: #f3f5f5;
+}
+
+.delete-service-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #dc3545;
+  font-size: 16px;
+}
+
+.delete-service-btn:hover {
+  color: #a71d2a;
+}
+
+.income-statement-container {
+  max-width: 900px;
+  margin: auto;
+  padding: 20px;
+}
+
+.filters {
+  align-items: center;
+  direction: rtl;
+}
+
+.report-card {
+  direction: rtl;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 20px;
+  background: var(--card-bg);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  color: var(--text-main);
+}
+
+
+.report-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px dashed var(--border-color);
+  font-size: 16px;
+  color: var(--text-main);
+}
+
+.report-row:last-child {
+  border-bottom: none;
+}
+
+.report-row.net {
+  font-size: 18px;
+  font-weight: bold;
+  color: #071d3d;
+}
+
+.direction-rtl {
+  direction: rtl;
+}
+
+.toggle-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px !important;
+  padding: 8px 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background: var(--input-bg);
+  transition: background 0.3s ease;
+  color: var(--text-main);
+  height: 59px !important;
+}
+
+.toggle-wrapper:hover {
+  background: var(--border-color);
+  opacity: 0.9;
+}
+
+.toggle-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-main);
+}
+
+/* switch container */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 26px;
+}
+
+/* hide default checkbox */
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--active-color);
+  transition: 0.4s;
+  border-radius: 26px;
+}
+
+/* circle */
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 20px;
+  width: 20px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 50%;
+}
+
+/* checked state */
+input:checked+.slider {
+  background-color: #4caf50;
+}
+
+input:checked+.slider:before {
+  transform: translateX(24px);
+}
+
+/* round style */
+.slider.round {
+  border-radius: 34px;
+}
+
+.settings-form {
+  font-size: 0.9rem;
+  direction: rtl;
+}
+
+.settings-form .card {
+  border-radius: 10px;
+  background-color: var(--card-bg) !important;
+  /* ✅ ضمان الخلفية المتغيرة */
+  color: var(--text-main) !important;
+  /* ✅ ضمان لون النص */
+  border: 1px solid var(--border-color) !important;
+}
+
+.settings-form h5,
+.settings-form h6 {
+  font-weight: 600;
+}
+
+.settings-form .form-label {
+  font-size: 0.8rem;
+  margin-bottom: 0.2rem;
+}
+
+.settings-form .form-control-sm {
+  font-size: 0.85rem;
+  padding: 0.3rem 0.5rem;
+}
+
+.settings-form img {
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.settings-form .card {
+  width: 70% !important;
+  margin: auto;
+}
+
+.settings-form button.save {
+  width: 50px !important;
+  margin: auto;
+  color: white;
+  background-color: #0d6efd !important;
+}
+
+.settings-form button.delete-img {
+  width: 120px !important;
+}
+
+@media (max-width: 555px) {
+  .settings-form .card {
+    width: 100% !important;
+  }
+}
+
+
+
+.navbar-logo {
+  height: 40px;
+  object-fit: contain;
+  cursor: pointer;
+  border-radius: 10px;
+  transition: 1s;
+}
+
+.navbar-logo:hover {
+  transform: translateY(-3px);
+}
+
+.text-is-paid {
+  color: rgb(26 195 117) !important;
+}
+
+.print-header,
+.print-footer {
+  display: none !important;
+}
+
+.only-print {
+  visibility: hidden !important;
+}
+
+/* tr,
+thead {
+  border-style: none !important;
+} */
+
+.table-bordered> :not(caption)>* {
+  border-width: 0 !important;
+}
+
+.table> :not(caption)>*>* {
+  border-bottom-width: 0 !important;
+}
+
+.table-bordered> :not(caption)>*>* {
+  border-width: 0 !important;
+}
+
+@media print {
+
+  /* 🖨️ Force Global Light Mode for Printing */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    color-adjust: exact !important;
+  }
+
+  /* body, */
+  .landing-page,
+  .dashboard-container,
+  .content,
+  .page-content,
+  .modal-content {
+    background-color: var(--card-bg) !important;
+    color: #000000 !important;
+    background-image: none !important;
+  }
+
+  /* Force tables to be clear */
+  .table,
+  .my-table-container,
+  .daily-table,
+  .services-table,
+  .summary-table-horizontal {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+    border: 1px solid #000000 !important;
+  }
+
+  
+    .my-table-container thead {
+    background: white;
+  
+}
+
+  .table th,
+  .daily-table th,
+  .my-table-container .my-table-head th,
+  .services-table th {
+    background-color: #f3f4f6 !important;
+    /* Light Grey for headers */
+    color: #000000 !important;
+    border: 1px solid #000000 !important;
+    font-weight: bold !important;
+  }
+
+  .table td,
+  .daily-table td,
+  .my-table-container .my-table-content td,
+  .services-table td {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+    border: 1px solid #000000 !important;
+  }
+
+  /* Reset shadows and gradients */
+  .card,
+  .card_dashbord,
+  .big_card,
+  .chart,
+  .dount,
+  .feature-card,
+  .service-item,
+  .counter-box {
+    box-shadow: none !important;
+    border: 1px solid #cccccc !important;
+    background: #ffffff !important;
+    color: #000000 !important;
+  }
+
+  .counter-box,
+  .color-box.cyan {
+    background: #ffffff !important;
+    border: 2px solid #000000 !important;
+    color: #000000 !important;
+  }
+
+  /* Hide navigation and UI elements */
+  .no-print,
+  .navbar,
+  .landnavbar,
+  .sidebar,
+  .overlay,
+  .btn-close,
+  .custom-close-button,
+  .lang-toggle,
+  .theme-toggle,
+  .add-service-btn,
+  .delete-service-btn,
+  .enter-btn,
+  .cta-button {
+    display: none !important;
+  }
+
+  .print-header,
+  .print-footer {
+    display: flex !important;
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  /* Support for 2-column header layout */
+  .print-header .row {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    justify-content: space-between !important;
+    width: 100% !important;
+    margin: 0 !important;
+  }
+
+  .print-header .col-6 {
+    flex: 0 0 48% !important;
+    max-width: 48% !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
+    color: red;
+  }
+
+  .only-print {
+    visibility: visible !important;
+  }
+
+  .print-row {
+    display: flex !important;
+    justify-content: space-between;
+    margin-bottom: 12px;
+  }
+
+  .print-strong {
+    color: black !important;
+    font-weight: bold !important;
+  }
+}
+
+/* daily table in dashboard */
+.daily-table {
+  width: 100%;
+  direction: rtl;
+  font-family: "Cairo", sans-serif;
+  background-color: #2D3748;
+  border-radius: 4px !important;
+  overflow: hidden;
+  overflow-y: auto;
+}
+
+.daily-table thead {
+  background-color: var(--table-header-bg);
+}
+
+.daily-table th,
+.daily-table td {
+  padding: 12px;
+  text-align: center;
+  font-size: 14px;
+}
+
+.daily-table tbody tr:hover {
+  background-color: #374151;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.daily-table th {
+  font-weight: bold;
+  color: #ffffff;
+}
+
+/* daily table in dashboard -----------------------------------------*/
+@media print {
+  .table-100 {
+    height: 90vh;
+  }
+
+  .my-table-container {
+    padding-bottom: 120px;
+    /* سيب مساحة للفوتر */
+  }
+
+  .long-tr {
+    height: 80px;
+  }
+}
+
+.print-footers {
+  text-align: center;
+  border-top: 2px solid #000;
+  padding-top: 10px;
+  font-size: 14px;
+  color: #555;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #fff;
+}
+
+@media print {
+  .print-footers {
+    position: fixed;
+    bottom: 0;
+  }
+}
+
+/* ------------------------------------ */
+
+.premium-upload-card {
+  width: 140px;
+  padding: 12px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(25px);
+  box-shadow: 0 8px 25px var(--background-color);
+  text-align: center;
+  transition: 0.3s;
+  position: relative;
+  border: 1px solid #854e8831;
+}
+
+.premium-upload-card:hover {
+  transform: translateY(-3px);
+}
+
+.premium-image-box {
+  width: 100%;
+  height: 100px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #a279d86e, #7137bd6e);
+  border: 1px solid #ddd;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.premium-image-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.upload-floating-btn {
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #74166c59, #3e0346de);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
+}
+
+.upload-floating-btn:hover {
+  transform: scale(1.1);
+}
+
+.upload-floating-btn svg {
+  color: white;
+  font-size: 14px;
+}
+
+.delete-btn-premium {
+  margin-top: 8px;
+  background: #ff4b4b;
+  border: none;
+  padding: 4px 10px;
+  border-radius: 6px;
+  color: white;
+  font-size: 11px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.delete-btn-premium:hover {
+  background: #d73838;
+}
+
+/*  premium-upload-card ----------------------------------------------------*/
+
+.permission-group {
+  background-color: var(--main-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  margin-bottom: 30px;
+}
+
+.group-title {
+  color: var(--primary-color);
+  font-weight: 800;
+  border-bottom: 2px solid var(--border-color);
+  display: inline-block;
+  padding-bottom: 5px;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+[data-bs-theme="dark"] .group-title {
+  color: var(--primary-color);
+  text-shadow: 0 0 10px rgba(187, 134, 252, 0.2);
+}
+
+.permission-card {
+  transition: all 0.3s ease;
+  background-color: var(--card-bg);
+  border: 2px solid var(--border-color) !important;
+  /* Stronger border */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  /* Subtle shadow */
+  border-radius: 12px !important;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding: 12px 15px !important;
+}
+
+.permission-card input[type="checkbox"] {
+  transform: scale(1.4);
+  /* Larger checkbox */
+  margin: 0 10px;
+  cursor: pointer;
+  accent-color: var(--primary-color);
+  /* Theme-aware color */
+}
+
+.permission-card.selected {
+  background-color: var(--perm-selected-bg);
+  color: var(--perm-selected-text) !important;
+  border-color: var(--perm-selected-bg) !important;
+  font-weight: 700;
+}
+
+.permission-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.my-btn-dash {
+  background-color: var(--primary-color) !important;
+  color: white !important;
+  border: none !important;
+  transition: opacity 0.3s;
+}
+
+.my-btn-dash:hover {
+  opacity: 0.9;
+  color: white !important;
+}
+
+/* From Uiverse.io by andrew-demchenk0 */
+.switch {
+  font-size: 17px;
+  position: relative;
+  display: inline-block;
+  width: 64px;
+  height: 34px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  transition: 0.4s;
+  border-radius: 30px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 30px;
+  width: 30px;
+  border-radius: 20px;
+  left: 2px;
+  bottom: 2px;
+  z-index: 2;
+  background-color: #e8e8e8;
+  transition: 0.4s;
+}
+
+.sun svg {
+  position: absolute;
+  top: 6px;
+  left: 36px;
+  z-index: 1;
+  width: 24px;
+  height: 24px;
+}
+
+.moon svg {
+  fill: #73c0fc;
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  z-index: 1;
+  width: 24px;
+  height: 24px;
+}
+
+/* .switch:hover */
+.sun svg {
+  animation: rotate 15s linear infinite;
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* .switch:hover */
+.moon svg {
+  animation: tilt 5s linear infinite;
+}
+
+@keyframes tilt {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  25% {
+    transform: rotate(-10deg);
+  }
+
+  75% {
+    transform: rotate(10deg);
+  }
+
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+.input:checked+.slider {
+  background-color: #183153;
+}
+
+.input:focus+.slider {
+  box-shadow: 0 0 1px #183153;
+}
+
+.input:checked+.slider:before {
+  transform: translateX(30px);
+}
+
+/* 🛠️ Fix Floating Label overlap for Select fields */
+.form-floating>.form-select {
+  padding-top: 1.425rem !important;
+  /* padding-bottom: 0.525rem !important; */
+}
+
+.form-floating>label {
+  padding-top: 0.8rem !important;
+}
+
+[dir="rtl"] .form-floating>label {
+  right: 0.75rem !important;
+  left: auto !important;
+  transform-origin: top right !important;
+}
+/* 🎯 تنسيق ألوان أيقونات الإجراءات (Edit, Delete, View) */
+
+/* أيقونة التعديل (Edit) */
+.btn-primary.no-style,
+.btn-sm.btn-primary {
+  color: var(--icon-edit-color) !important;
+  background: transparent !important;
+  border: none !important;
+  font-size: 18px !important;
+  transition: all 0.3s ease;
+}
+
+.btn-primary.no-style:hover,
+.btn-sm.btn-primary:hover {
+  color: var(--primary-hover) !important;
+  transform: scale(1.2);
+}
+
+/* أيقونة الحذف (Delete) */
+.btn-danger.no-style,
+.btn-sm.btn-danger {
+  color: var(--icon-delete-color) !important;
+  background: transparent !important;
+  border: none !important;
+  font-size: 18px;
+  transition: all 0.3s ease;
+}
+
+.btn-danger.no-style:hover,
+.btn-sm.btn-danger:hover {
+  color: #dc2626 !important;
+  transform: scale(1.2);
+}
+
+/* أيقونة العرض (View) */
+.btn-success.no-style,
+.btn-sm.btn-success {
+  color: var(--icon-view-color) !important;
+  background: transparent !important;
+  border: none !important;
+  font-size: 18px;
+  transition: all 0.3s ease;
+}
+
+.btn-success.no-style:hover,
+.btn-sm.btn-success:hover {
+  color: #059669 !important;
+  transform: scale(1.2);
+}
+
+/* أيقونة المعلومات (Info) */
+.btn-info.no-style,
+.btn-sm.btn-info {
+  color: var(--accent-color) !important;
+  background: transparent !important;
+  border: none !important;
+  font-size: 18px;
+  transition: all 0.3s ease;
+}
+
+.btn-info.no-style:hover,
+.btn-sm.btn-info:hover {
+  color: var(--primary-color) !important;
+  transform: scale(1.2);
+}
+
+/* ===== 🔧 إصلاح ألوان الـ Modal (Header & Footer) ===== */
+
+/* Modal Header */
+.modal-header {
+  background-color: var(--card-bg) !important;
+  color: var(--text-main) !important;
+}
+
+.modal-header .modal-title {
+  color: var(--text-main) !important;
+}
+
+/* Modal Footer */
+.modal-footer {
+  background-color: var(--card-bg) !important;
+  color: var(--text-main) !important;
+}
+
+/* Modal Content */
+.modal-content {
+  background-color: var(--card-bg) !important;
+  color: var(--text-main) !important;
+}
+
+/* Close Button */
+.modal-header .btn-close {
+  color: var(--text-main) !important;
+}
+
+/* Modal Footer Buttons */
+
+.modal-footer .btn {
+  
+  background-color: var(--button-pr-hover) !important;
+  color: #FFFFFF !important;
+  border: none !important;
+  padding: 10px 30px !important;
+  font-weight: 600 !important;
+}
+
+.modal-footer .btn:hover {
+  background-color: var(--primary-color) !important;
+  transform: scale(1.05);
+}
+
+/* Modal Content */
+.modal-content {
+  background-color: var(--card-bg) !important;
+  color: var(--text-main) !important;
+}
+
+/* ===== 📊 إصلاح ألوان الجداول داخل الـ Modals ===== */
+
+/* Table rows inside modals - dark background for better contrast */
+.modal-body .table tbody tr {
+  background-color: #2D3748 !important;
+  color: #FFFFFF !important;
+}
+
+.modal-body .table tbody tr:hover {
+  background-color: #374151 !important;
+}
+
+.modal-body .table tbody td {
+  color: #FFFFFF !important;
+  border-color: #4B5563 !important;
+}
+
+/* Table header inside modals */
+.modal-body .table thead th {
+  background-color: var(--table-header-bg) !important;
+  color: #FFFFFF !important;
+  border-color: #4B5563 !important;
+}
+
+/* ============================================================
+   🎨 SETTINGS TABS & CONTRACT CLAUSES STYLES
+   ============================================================ */
+
+.settings-tabs-container {
+  width: 70%;
+  margin: 0 auto 25px auto;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 8px;
+  border-radius: 16px;
+  border: 1px solid var(--border-color);
+  backdrop-filter: blur(10px);
+}
+
+[data-bs-theme="dark"] .settings-tabs-container {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.settings-tab-btn {
+  flex: 1;
+  min-width: 150px;
+  border: none;
+  background: transparent;
+  color: var(--text-secondary);
+  padding: 12px 20px;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.settings-tab-btn:hover {
+  background: var(--button-pr-hover) !important;
+  color: #fff !important;
+  transform: translateY(-2px);
+}
+
+.settings-tab-btn.active {
+  background: var(--active-color) !important;
+  color: #fff !important;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+.tab-fade-in {
+  animation: fadeInScale 0.4s ease both;
+}
+
+/* Clause Page Layout */
+.clauses-tab-container {
+  width: 70%;
+  margin: 0 auto;
+}
+
+.clause-section-card {
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.border-left-primary {
+  border-left: 5px solid #0284C7 !important;
+}
+
+.border-left-success {
+  border-left: 5px solid #10B981 !important;
+}
+
+.border-left-warning {
+  border-left: 5px solid #F59E0B !important;
+}
+
+/* Custom Soft Badges */
+.bg-primary-soft {
+  background-color: rgba(2, 132, 199, 0.15) !important;
+}
+
+.bg-success-soft {
+  background-color: rgba(16, 185, 129, 0.15) !important;
+}
+
+.bg-warning-soft {
+  background-color: rgba(245, 158, 11, 0.15) !important;
+}
+
+/* Clause Dynamic Row Item */
+.clause-row-item {
+  background-color: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-color) !important;
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+[data-bs-theme="light"] .clause-row-item {
+  background-color: rgba(0, 0, 0, 0.02);
+}
+
+.clause-row-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  border-color: var(--active-color) !important;
+}
+
+/* Buttons micro-interactions */
+.add-clause-btn {
+  font-weight: 600;
+  transition: all 0.3s ease;
+  border-radius: 8px !important;
+}
+
+.hover-grow:hover {
+  transform: scale(1.03);
+}
+
+.delete-clause-btn-row {
+  border: 1px solid #EF4444 !important;
+  color: #EF4444 !important;
+  background: transparent !important;
+  padding: 8px 12px !important;
+  border-radius: 8px !important;
+  transition: all 0.2s ease;
+}
+
+.delete-clause-btn-row:hover {
+  background-color: #EF4444 !important;
+  color: #fff !important;
+  transform: scale(1.1);
+}
+
+@media (max-width: 991px) {
+  .delete-clause-btn-row {
+    width: 100%;
+    margin-top: 10px;
+  }
+}
+
+@media (max-width: 555px) {
+  .settings-tabs-container,
+  .clauses-tab-container {
+    width: 100% !important;
+  }
+}
+
+@media print{
+  .rental-contract .head{
+    display: flex;
+  }
+  .contract_clauses{display:flex !important;}
+  .vsc {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    flex-direction: row !important;
+    color: #000000 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  /* توزيع الحقول الافتراضية لتأخذ ثلث المساحة (3 أعمدة في السطر) */
+  .vsc .col-md-4 {
+    width: 33.333% !important;
+    flex: 0 0 33.333% !important;
+    max-width: 33.333% !important;
+    display: block !important;
+  }
+
+  /* توزيع الحقول المتوسطة لتأخذ نصف المساحة (عمودين في السطر) */
+  .vsc .col-md-6 {
+    width: 50% !important;
+    flex: 0 0 50% !important;
+    max-width: 50% !important;
+    display: block !important;
+  }
+
+  /* الحقول العريضة (معلومات السيارة، الملاحظات، الشروط) تأخذ السطر بالكامل */
+  .vsc .col-md-12, 
+  .vsc .col-12 {
+    width: 100% !important;
+    flex: 0 0 100% !important;
+    max-width: 100% !important;
+    display: block !important;
+    page-break-inside: avoid; /* تمنع انقسام العنصر بين صفحتين */
+  }
+
+  /* تحسين مظهر الفواصل والعناوين عند الطباعة بدلاً من إخفائها */
+  .vsc hr {
+    display: block !important;
+    width: 100% !important;
+    border: 0 !important;
+    border-top: 1px solid #ddd !important;
+    margin: 15px 0 !important;
+  }
+
+  .vsc h6, 
+  .vsc h5 {
+    display: block !important;
+    width: 100% !important;
+    color: #000000 !important;
+    margin-top: 10px !important;
+    margin-bottom: 15px !important;
+    font-size: 1.1rem !important;
+    border-bottom: 2px solid #000000 !important; /* خط سميك أسفل العنوان لتحديد القسم */
+    padding-bottom: 5px !important;
+    page-break-after: avoid; /* تمنع فصل العنوان عن محتواه في صفحة أخرى */
+  }
+
+  /* تنسيق النصوص والحدود السفلية */
+  .vsc label {
+    color: #444444 !important;
+    font-size: 0.9rem !important;
+    margin-bottom: 2px !important;
+  }
+
+  .vsc p {
+    color: #000000 !important;
+    font-size: 1rem !important;
+    font-weight: 500 !important;
+    border-bottom: 1px solid #eee !important; /* حد خفيف أسفل القيمة لقراءة أسهل */
+    padding-bottom: 4px !important;
+    margin-bottom: 12px !important;
+  }
+
+  /* ضمان ظهور قسم الشروط وبنائه بشكل منظم */
+  .contract_clauses {
+    display: block !important;
+    margin-top: 20px !important;
+    page-break-inside: avoid;
+  }
+
+  .contract_clauses li {
+    page-break-inside: avoid;
+  }
+
+  .rental-contract .head {
+    display: flex !important;
+  }
+}
+
+/* الستايل العادي للشاشة لتصحيح خطأ الكوتيشن في كودك القديم */
+.vsc {
+  color: white !important; /* تم تصحيح الكوتيشن الزائد هنا */
+}
+
+.vsc{
+    color:"white !important";
+  }
+.rental-contract .head{display:none !important;align-items:center;justify-content:space-between;}
+.contract_clauses{display:none}
+.clause {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.clause h6{
+  margin: 0;
+  font-weight: bold;
+}
+.clause p{
+margin: 0;
+}
+
