@@ -1189,5 +1189,16 @@
   "withdraw_cannot_exceed_salary": "The employee advance cannot exceed the employee's salary",
   "back": "Back",
   "discountReward_cashBalance": "Cash Balance",
-  "discountReward_bankBalance": "Bank Balance"
+  "discountReward_bankBalance": "Bank Balance",
+    "invoice_service": "Service Invoice",
+  "car_sale": "Car Sale",
+  "owner_deposit": "Owner Deposit",
+  "installment_payment": "Installment Payment",
+  "cannot_edit_opening_balance_has_transactions": "Cannot edit opening balance as there are existing transactions",
+  "company_address": "Company Address",
+  "company_website": "Company Website",
+  "company_commercial": "Company Commercial Registration",
+  "company_phone": "Company Phone",
+
+  "load_more": "Load More"
 }

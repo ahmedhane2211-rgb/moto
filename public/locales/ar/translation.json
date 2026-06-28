@@ -2,7 +2,11 @@
   "office_representative_signature":"توقيع ممثل المكتب",
   "lessee_signature":"توقيع المستأجر",
   "customer_and_vehicle_info":"معلومات العميل والسيارة",
+
   "wsab":"واتساب",
+  "company_commercial":"رقم الحساب التجاري",
+  "company_phone":"هاتف الشركة",
+  "company_address":"عنوان الشركة",
   "commercial_number":"رقم السجل التجاري",
   "company_seal":"ختم الشركة",
   "type":"النوع",
@@ -316,6 +320,7 @@
   "no_data_available": "لا توجد بيانات متاحة",
   "company_name_label": "اسم الشركة",
   "address_label": "العنوان",
+  "company_adress": "عنوان الشركة",
   "phone_label": "الهاتف",
   "print_date_label": "تاريخ الطباعة",
   "invoice_number_label": "رقم الفاتورة",
@@ -1183,7 +1188,14 @@
   "withdraw_cannot_exceed_salary": "لا يمكن إعطاء الموظف سلفة أكبر من قيمة الراتب الخاص به",
   "back": "العودة",
   "discountReward_cashBalance": "رصيد الخزنة",
-  "discountReward_bankBalance": "رصيد البنك"
+  "discountReward_bankBalance": "رصيد البنك",
+  "invoice_service": "فاتورة خدمات",
+  "car_sale": "مبيعات السيارات",
+  "owner_deposit": "إيداع المالك",
+  "installment_payment": "دفع القسط",
+  "cannot_edit_opening_balance_has_transactions": "لا يمكن تعديل الرصيد الافتتاحي لأنه يحتوي على معاملات",
+  "load_more": "تحميل المزيد"
+
 
   
 }

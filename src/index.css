@@ -19,6 +19,8 @@ input[type="number"] {
   --text-main: #0F172A;
   /* Deep slate - excellent contrast */
   --text-secondary: #475569;
+
+  --text-inside-modal: #1e293b;
   /* Slate 600 - enhanced readability */
   --primary-color: #1f4252;
   /* Sky blue - modern & energetic */
@@ -79,6 +81,8 @@ input[type="number"] {
   --text-main: #F1F5F9;
   /* Soft white - excellent contrast */
   --text-secondary: #94A3B8;
+
+  --text-inside-modal: #F1F5F9;
   /* Slate 400 - distinct secondary */
   --primary-color: #38BDF8;
   /* Bright sky blue */

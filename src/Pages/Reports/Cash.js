@@ -30,7 +30,7 @@ function Cash() {
 
   const columns = [
     { header: t("cash_date"), accessor: "date" },
-    { header: t("type"), accessor: "type" },
+    { header: t("type"), accessor: (row) => t(row.type) || "-" },
     // {
     //   header: "النوع",
     //   accessor: (row) =>
@@ -178,9 +178,9 @@ function Cash() {
           </FloatingLabel>
         </div>
 
-        <div className="col-md-1 d-flex align-items-center">
+        {/* <div className="col-md-1 d-flex align-items-center">
           <MyButton onClick={handleSearch} text={t("cash_search")} />
-        </div>
+        </div> */}
       </div>
 
       {appliedFilters && (

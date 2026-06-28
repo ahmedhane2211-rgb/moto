@@ -649,6 +649,7 @@ const Landing = () => {
                 onChange={(e) =>
                   setRateData({ ...rateData, email: e.target.value })
                 }
+                required
                 label={t("email")}
                 type="email"
               />
@@ -660,7 +661,7 @@ const Landing = () => {
                 }
                 label={t("phone")}
                 type="tel"
-                required
+                // required
               />
 
               <MyInput

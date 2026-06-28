@@ -31,6 +31,7 @@ function Suppliers() {
   const [loading, setLoading] = useState(false);
   const [refreshKey, setRefreshKey] = useState(0);
   const [editId, setEditId] = useState(null);
+  const [canEditOpeningBalance, setCanEditOpeningBalance] = useState(true);
 
   const [showDetailsModal, setShowDetailsModal] = useState(false);
   const [selectedSupplier, setSelectedSupplier] = useState(null);
@@ -50,6 +51,7 @@ function Suppliers() {
     setEditId(null);
     setErrors({});
     setImagePreviews([]);
+    setCanEditOpeningBalance(true);
     setShowModal(true);
   };
 
@@ -66,6 +68,10 @@ function Suppliers() {
     });
     setEditId(record.uuid);
     setErrors({});
+    const hasTransactions =
+      record.balances &&
+      record.balances.some((b) => b.type !== "opening_balance");
+    setCanEditOpeningBalance(!hasTransactions);
     setShowModal(true);
 
     if (record.attachments && record.attachments.length > 0) {
@@ -131,7 +137,7 @@ function Suppliers() {
         } else if (
           key === "balances" ||
           key === "last_balance" ||
-          (editId && key === "opening_balance")
+          (editId && key === "opening_balance" && !canEditOpeningBalance)
         ) {
           // Skip large objects or fields that shouldn't be updated during edit
         } else if (formData[key] !== null && formData[key] !== undefined) {
@@ -308,7 +314,13 @@ function Suppliers() {
                 })
               }
               error={errors.opening_balance?.[0]}
+              disabled={!!(editId && !canEditOpeningBalance)}
             />
+            {editId && !canEditOpeningBalance && (
+              <div className="text-muted mt-1" style={{ fontSize: "0.9rem" }}>
+                {t("cannot_edit_opening_balance_has_transactions")}
+              </div>
+            )}
           </div>
         </div>
 

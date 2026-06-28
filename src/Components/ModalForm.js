@@ -233,15 +233,15 @@ useEffect(() => {
               >
                 <div>
                   <span>{settings?.company_phone || "01005612315"}</span>{" "}
-                  <strong> :واتساب</strong>
+                  <strong> :{t("wsab")}</strong>
                 </div>
                 <div>
                   <span>{settings?.company_phone || "01023150231"}</span>{" "}
-                  <strong> :هاتف الشركة</strong>
+                  <strong> :{t("company_phone")}</strong>
                 </div>
                 <div>
                   <span>{settings?.company_commercial || "5132501"}</span>{" "}
-                  <strong> :رقم حساب الشركة</strong>
+                  <strong> :{t("company_commercial")}</strong>
                 </div>
               </div>
 
@@ -256,13 +256,13 @@ useEffect(() => {
                 <div
                   style={{ display: "flex", alignItems: "center", gap: "5px" }}
                 >
-                  <strong>الموقع الإلكتروني: </strong>{" "}
+                  <strong> {t("website")}:</strong>{" "}
                   {settings?.company_website || "http://www.nyhexiruru.me.uk"}
                 </div>
                 <div
                   style={{ display: "flex", alignItems: "center", gap: "5px" }}
                 >
-                  <strong>عنوان الشركة: </strong>{" "}
+                  <strong> {t("company_address")}:</strong>{" "}
                   {settings?.company_email || "ahmed@gmail.com"}
                 </div>
                 <div
@@ -273,7 +273,7 @@ useEffect(() => {
                     marginTop: "4px",
                   }}
                 >
-                  <strong>ختم الشركة :</strong>
+                  <strong> {t("company_seal")}:</strong>
                   {settings?.company_seal ? (
                     <img
                       src={settings?.company_seal}

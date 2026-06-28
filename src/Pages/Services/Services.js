@@ -20,6 +20,7 @@ function Services() {
   const [formData, setFormData] = useState({
     name: "",
     category_id: "",
+    price: "",
   });
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
@@ -164,6 +165,16 @@ function Services() {
             setFormData({ ...formData, name: e.target.value })
           }
           error={errors.name?.[0]}
+          required={true}
+        />
+        <MyInput
+          label={t("price")}
+          type="number"
+          value={formData.price}
+          onChange={(e) =>
+            setFormData({ ...formData, price: e.target.value })
+          }
+          error={errors.price?.[0]}
           required={true}
         />
 

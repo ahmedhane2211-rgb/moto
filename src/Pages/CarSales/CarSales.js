@@ -14,6 +14,7 @@ import { HandCoins, SquarePen } from "lucide-react";
 import { NegativeNumberDisplay } from "../../utils/formatNegativeNumber";
 import { useSettings } from "../../context/SettingsContext";
 import Seo from "../../Components/Seo";
+import { formatNumbersToDecimals } from "../../utils/formatNumbersToDecimals";
 
 function CarSales() {
   const { t } = useTranslation();
@@ -273,12 +274,15 @@ function CarSales() {
       header: t("car_info"),
       accessor: (row) => `${row.car?.brand || ""} ${row.car?.model || ""}`,
     },
-    { header: t("sale_price"), accessor: "sale_price" },
+    {
+      header: t("sale_price"),
+      accessor: (row) => formatNumbersToDecimals(row.sale_price),
+    },
     {
       header: t("discount_value"),
-      accessor: (row) => <NegativeNumberDisplay value={row.discount} />,
+      accessor: (row) => <NegativeNumberDisplay value={formatNumbersToDecimals(row.discount)} />,
     },
-    { header: t("paid"), accessor: "paid" },
+    { header: t("paid"), accessor:  (row) => formatNumbersToDecimals(row.paid) },
     { header: t("remaining"), accessor: "remaining" },
     {
       header: t("payment_method"),
@@ -489,6 +493,7 @@ function CarSales() {
                     label: t("payment_direct_installment"),
                   },
                   { value: "network", label: t("payment_network") },
+                  { value: "transfer", label: t("payment_transfer") },
                 ]}
                 error={errors.payment_method?.[0]}
               />
@@ -705,51 +710,49 @@ function CarSales() {
           size="lg"
         >
           {selectedSale && (
-            <div className="row p-3 vsc" style={{ borderRadius: "10px" }}>
+            <div className="row p-3 vsc" style={{ borderRadius: "10px", color: "var(--text-inside-modal) !important" }}>
               <div className="col-md-6 mb-3">
                 <label className="fw-bold">{t("customer_name")}:</label>
-                <p className="border-bottom pb-2">
+                <p style={{ borderColor: "var(--text-inside-modal) !important" }} className="border-bottom pb-2">
                   {selectedSale.customer?.name}
                 </p>
               </div>
               <div className="col-md-6 mb-3">
                 <label className="fw-bold">{t("branch")}:</label>
-                <p className="border-bottom pb-2">
+                <p style={{ borderColor: "var(--text-inside-modal) !important" }} className="border-bottom pb-2">
                   {selectedSale.branch?.name}
                 </p>
               </div>
               <div className="col-md-12 mb-3">
                 <label className="fw-bold">{t("car_info")}:</label>
-                <p className="border-bottom pb-2">
+                <p style={{ borderColor: "var(--text-inside-modal) !important" }} className="border-bottom pb-2">
                   {selectedSale.car?.brand} {selectedSale.car?.model} -{" "}
                   {selectedSale.car?.plate_number}
                 </p>
               </div>
               <div className="col-md-4 mb-3">
                 <label className="fw-bold">{t("sale_price")}:</label>
-                <p className="border-bottom pb-2">{selectedSale.sale_price}</p>
+                <p style={{ borderColor: "var(--text-inside-modal) !important" }} className="border-bottom pb-2">{selectedSale.sale_price}</p>
               </div>
               <div className="col-md-4 mb-3">
                 <label className="fw-bold">{t("discounts")}:</label>
-                <p className="border-bottom pb-2">
-                  <NegativeNumberDisplay value={selectedSale.discount} />
-                </p>
+                <p style={{ borderColor: "var(--text-inside-modal) !important" }} className="border-bottom pb-2">{selectedSale.discount}</p>
               </div>
               <div className="col-md-4 mb-3">
                 <label className="fw-bold">{t("total")}:</label>
-                <p className="border-bottom pb-2">{selectedSale.total}</p>
+                <p style={{ borderColor: "var(--text-inside-modal) !important" }} className="border-bottom pb-2">{selectedSale.total}</p>
               </div>
               <div className="col-md-4 mb-3">
                 <label className="fw-bold">{t("paid")}:</label>
-                <p className="border-bottom pb-2">{selectedSale.paid}</p>
+                <p style={{ borderColor: "var(--text-inside-modal) !important" }} className="border-bottom pb-2">{selectedSale.paid}</p>
               </div>
               <div className="col-md-4 mb-3">
                 <label className="fw-bold">{t("remaining")}:</label>
-                <p className="border-bottom pb-2">{selectedSale.remaining}</p>
+                <p style={{ borderColor: "var(--text-inside-modal) !important" }} className="border-bottom pb-2">{selectedSale.remaining}</p>
               </div>
               <div className="col-md-4 mb-3">
                 <label className="fw-bold">{t("payment_method")}:</label>
-                <p className="border-bottom pb-2">
+                <p style={{ borderColor: "var(--text-inside-modal) !important" }} className="border-bottom pb-2">
                   {t(`payment_${selectedSale.payment_method}`)}
                 </p>
               </div>
@@ -757,17 +760,17 @@ function CarSales() {
               <h6 className="w-100">{t("fees_section")}</h6>
               <div className="col-md-4 mb-3">
                 <label className="fw-bold">{t("administrative_fees")}:</label>
-                <p className="border-bottom pb-2">{selectedSale.admin_fees}</p>
+                <p style={{ borderColor: "var(--text-inside-modal) !important" }} className="border-bottom pb-2">{selectedSale.admin_fees}</p>
               </div>
               <div className="col-md-4 mb-3">
                 <label className="fw-bold">{t("license_fees")}:</label>
-                <p className="border-bottom pb-2">
+                <p style={{ borderColor: "var(--text-inside-modal) !important" }} className="border-bottom pb-2">
                   {selectedSale.license_fees}
                 </p>
               </div>
               <div className="col-md-4 mb-3">
                 <label className="fw-bold">{t("tax")}:</label>
-                <p className="border-bottom pb-2">{selectedSale.tax}</p>
+                <p style={{ borderColor: "var(--text-inside-modal) !important" }} className="border-bottom pb-2">{selectedSale.tax}</p>
               </div>
               {selectedSale.bank && (
                 <>
@@ -785,7 +788,7 @@ function CarSales() {
                   </h6>
                   <div className="col-md-6 mb-3">
                     <label className="fw-bold">{t("financing_entity")}:</label>
-                    <p className="border-bottom pb-2">
+                    <p style={{ borderColor: "var(--text-inside-modal) !important" }} className="border-bottom pb-2">
                       {selectedSale.bank?.name}
                     </p>
                   </div>
@@ -793,13 +796,13 @@ function CarSales() {
                     <label className="fw-bold">
                       {t("purchase_order_number")}:
                     </label>
-                    <p className="border-bottom pb-2">
+                    <p style={{ borderColor: "var(--text-inside-modal) !important" }} className="border-bottom pb-2">
                       {selectedSale.bank_order_number}
                     </p>
                   </div>
                   <div className="col-md-6 mb-3">
                     <label className="fw-bold">{t("financing_amount")}:</label>
-                    <p className="border-bottom pb-2">
+                    <p style={{ borderColor: "var(--text-inside-modal) !important" }} className="border-bottom pb-2">
                       {selectedSale.bank_amount}
                     </p>
                   </div>
@@ -807,7 +810,7 @@ function CarSales() {
                     <label className="fw-bold">
                       {t("purchase_order_date")}:
                     </label>
-                    <p className="border-bottom pb-2">
+                    <p style={{ borderColor: "var(--text-inside-modal) !important" }} className="border-bottom pb-2">
                       {selectedSale.bank_order_date ||
                         selectedSale.purchase_order_date ||
                         "-"}
@@ -817,7 +820,7 @@ function CarSales() {
               )}
               <div className="col-md-12">
                 <label className="fw-bold">{t("notes")}:</label>
-                <p className="border-bottom pb-2">
+                <p style={{ borderColor: "var(--text-inside-modal) !important" }} className="border-bottom pb-2">
                   {selectedSale.notes || "-"}
                 </p>
               </div>

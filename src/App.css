@@ -95,6 +95,10 @@
 .my-input-container label {
   padding-right: 5px !important;
 }
+.form-floating>.form-control, .form-floating>.form-control-plaintext, .form-floating>.form-select {
+  min-height: 25px !important;
+  height: 30px !important;
+}
 
 .my-btn {
   background-color: var(--button-pr) !important;
@@ -570,3 +574,4 @@
 [dir="ltr"] .date-filter-row {
   flex-direction: row;
 } */
+
